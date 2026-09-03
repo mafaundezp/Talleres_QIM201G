@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Taller Colaborativo 1 de QIM201G: Química aplicada">
+  <title>Taller Colaborativo 1 — QIM201G</title>
+
+  <style>
+    :root {
+      --azul: #123b5d;
+      --azul-medio: #2d6a8a;
+      --azul-claro: #eaf3f8;
+      --morado: #6d28d9;
+      --morado-claro: #f5f3ff;
+      --verde: #166534;
+      --verde-claro: #f0fdf4;
+      --amarillo: #fff7df;
+      --texto: #1f2937;
+      --gris: #64748b;
+      --borde: #cbd5e1;
+      --fondo: #f8fafc;
+      --blanco: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    header {
+      padding: 34px 5vw 30px;
+      background: linear-gradient(135deg, var(--azul), var(--azul-medio));
+      color: white;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      line-height: 1.2;
+    }
+
+    header h2 {
+      margin: 0 0 15px;
+      font-size: clamp(1.05rem, 2vw, 1.4rem);
+      font-weight: normal;
+    }
+
+    header p {
+      max-width: 1100px;
+      margin: 5px 0;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 13px 5vw;
+      background: white;
+      border-bottom: 1px solid var(--borde);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .07);
+    }
+
+    .toolbar label {
+      color: var(--azul);
+      font-weight: bold;
+    }
+
+    .toolbar input,
+    .toolbar select,
+    .toolbar button {
+      min-height: 40px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font: inherit;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      border: 1px solid var(--borde);
+      background: white;
+      color: var(--texto);
+    }
+
+    .toolbar input {
+      min-width: 220px;
+      flex: 1 1 220px;
+    }
+
+    .toolbar select {
+      min-width: 210px;
+      flex: 0 1 210px;
+    }
+
+    .toolbar button {
+      border: none;
+      background: var(--morado);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .toolbar button:hover {
+      filter: brightness(1.1);
+    }
+
+    .container {
+      width: min(1400px, 92%);
+      margin: 0 auto;
+      padding: 24px 0 60px;
+    }
+
+    .notice {
+      margin-bottom: 22px;
+      padding: 17px 19px;
+      border-left: 5px solid var(--azul);
+      border-radius: 7px;
+      background: var(--azul-claro);
+    }
+
+    .notice h2 {
+      margin-top: 0;
+      color: var(--azul);
+      font-size: 1.2rem;
+    }
+
+    .notice p {
+      margin: 8px 0;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(270px, .75fr) minmax(520px, 1.8fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel,
+    .workspace {
+      border: 1px solid var(--borde);
+      border-radius: 9px;
+      background: white;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, .06);
+    }
+
+    .panel {
+      position: sticky;
+      top: 76px;
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+      padding: 17px;
+    }
+
+    .panel h2,
+    .workspace h2 {
+      margin-top: 0;
+      color: var(--azul);
+    }
+
+    .panel-summary {
+      color: var(--gris);
+      font-size: .93rem;
+    }
+
+    .reto-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .reto-button {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--borde);
+      border-radius: 7px;
+      background: #f8fafc;
+      color: var(--texto);
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .reto-button:hover,
+    .reto-button.active {
+      border-color: var(--azul-medio);
+      background: var(--azul-claro);
+    }
+
+    .reto-button strong {
+      display: block;
+      color: var(--azul);
+      line-height: 1.3;
+    }
+
+    .reto-button small {
+      display: block;
+      margin-top: 3px;
+      color: var(--gris);
+    }
+
+    .workspace {
+      min-width: 0;
+      padding: 25px;
+    }
+
+    .workspace h2 {
+      margin-bottom: 7px;
+      font-size: 1.65rem;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin-top: 0;
+      color: var(--gris);
+    }
+
+    .tags {
+      margin: 12px 0 17px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 3px 5px 3px 0;
+      padding: 4px 10px;
+      border-radius: 18px;
+      background: #fff3d6;
+      color: #854d0e;
+      font-size: .84rem;
+    }
+
+    .tag.blue {
+      background: var(--azul-claro);
+      color: var(--azul);
+    }
+
+    .tag.purple {
+      background: var(--morado-claro);
+      color: #6b21a8;
+    }
+
+    .tag.green {
+      background: var(--verde-claro);
+      color: var(--verde);
+    }
+
+    .section {
+      margin: 23px 0;
+    }
+
+    .section h3 {
+      margin: 0 0 9px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #e2e8f0;
+      color: var(--azul);
+      font-size: 1.1rem;
+    }
+
+    .main-question {
+      padding: 16px 18px;
+      border: 1px solid #fcd34d;
+      border-radius: 7px;
+      background: var(--amarillo);
+      font-size: 1.08rem;
+      font-weight: bold;
+    }
+
+    .data-box {
+      padding: 14px 16px;
+      border-left: 4px solid var(--verde);
+      border-radius: 6px;
+      background: var(--verde-claro);
+    }
+
+    .data-box ul {
+      margin-bottom: 0;
+    }
+
+    .questions {
+      padding-left: 24px;
+    }
+
+    .questions li {
+      margin-bottom: 10px;
+    }
+
+    .product-box {
+      padding: 14px 16px;
+      border-left: 4px solid var(--morado);
+      border-radius: 7px;
+      background: var(--morado-claro);
+    }
+
+    .product-box ul {
+      margin-bottom: 0;
+    }
+
+    .reaction {
+      display: inline-block;
+      padding: 10px 13px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      border: 1px solid var(--borde);
+      text-align: left;
+    }
+
+    th {
+      background: var(--azul);
+      color: white;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    .initial {
+      padding: 35px 15px;
+      color: var(--gris);
+      text-align: center;
+    }
+
+    .empty {
+      padding: 20px;
+      border: 1px dashed var(--borde);
+      border-radius: 7px;
+      color: var(--gris);
+      text-align: center;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      color: var(--gris);
+      font-size: .9rem;
+    }
+
+    @media (max-width: 1000px) {
+      .toolbar {
+        position: static;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        position: static;
+        max-height: none;
+      }
+
+      .reto-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      .container {
+        width: 94%;
+      }
+
+      .toolbar input,
+      .toolbar select,
+      .toolbar button {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 100%;
+      }
+
+      .reto-list {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace {
+        padding: 17px;
+      }
+
+      .workspace h2 {
+        font-size: 1.35rem;
+      }
+
+      table {
+        font-size: .87rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Taller Colaborativo N.° 1 de Química Aplicada</h1>
+    <h2>QIM201G — Química General y Química Orgánica</h2>
+    <p>
+      Documento interactivo de retos y problemas contextualizados en Agronomía,
+      ámbito forestal y Recursos Naturales.
+    </p>
+    <p>
+      <strong>Modalidad:</strong> trabajo colaborativo con respuestas desarrolladas
+      en papelógrafo u hojas blancas.
+    </p>
+    <p>
+      <strong>Importante:</strong> el docente autoriza exclusivamente el uso de
+      AgroChemBot como apoyo conceptual.
+    </p>
+  </header>
+
+  <div class="toolbar">
+    <label for="buscar">Buscar:</label>
+    <input
+      id="buscar"
+      type="search"
+      placeholder="fertilizante, cobre, nitrógeno, pureza..."
+    >
+
+    <label for="filtroArea">Área:</label>
+    <select id="filtroArea">
+      <option value="">Todas las áreas</option>
+      <option value="Agronomía">Agronomía</option>
+      <option value="Ámbito forestal">Ámbito forestal</option>
+      <option value="Recursos naturales">Recursos naturales</option>
+    </select>
+
+    <label for="filtroContenido">Contenido:</label>
+    <select id="filtroContenido">
+      <option value="">Todos los contenidos</option>
+      <option value="Composición porcentual">Composición porcentual</option>
+      <option value="Estequiometría">Estequiometría</option>
+      <option value="Reactivo limitante">Reactivo limitante</option>
+      <option value="Pureza">Pureza</option>
+      <option value="Rendimiento">Rendimiento</option>
+      <option value="Cantidad de sustancia">Cantidad de sustancia</option>
+      <option value="Ingredientes activos">Ingredientes activos</option>
+      <option value="Minerales">Minerales</option>
+    </select>
+
+    <button id="limpiarFiltros" type="button">
+      Limpiar filtros
+    </button>
+  </div>
+
+  <main class="container">
+
+    <section class="notice">
+      <h2>Instrucciones generales</h2>
+
+      <p>
+        Formen los grupos indicados por el docente y seleccionen o reciban un reto
+        según la organización de la actividad.
+      </p>
+
+      <p>
+        Lean cuidadosamente el contexto, organicen los datos y construyan una
+        respuesta fundamentada mediante cálculos químicos.
+      </p>
+
+      <p>
+        Las respuestas deben desarrollarse exclusivamente en papelógrafo u hojas
+        blancas. Esta página funciona como guía de consulta.
+      </p>
+
+      <p>
+        El docente autoriza exclusivamente el uso de
+        <strong>AgroChemBot</strong> como apoyo conceptual. No está autorizado el uso
+        de otros sistemas de inteligencia artificial.
+      </p>
+
+      <p>
+        Las conclusiones deben limitarse a la información química solicitada. No
+        formulen recomendaciones sobre eficacia, toxicidad, impacto ambiental o
+        procesos industriales cuando el reto no lo solicite.
+      </p>
+    </section>
+
+    <div class="layout">
+
+      <aside class="panel">
+        <h2>Seleccionar reto</h2>
+        <p id="contador" class="panel-summary"></p>
+
+        <div id="listaRetos" class="reto-list"></div>
+
+        <div id="sinResultados" class="empty" style="display:none;">
+          No se encontraron retos con estos criterios.
+        </div>
+      </aside>
+
+      <section id="workspace" class="workspace">
+        <div class="initial">
+          <h2>Seleccione un reto</h2>
+          <p>
+            Utilice el panel izquierdo para comenzar.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <p class="footer-note">
+      QIM201G — Taller Colaborativo N.° 1. Las respuestas no se guardan ni se envían
+      desde esta página.
+    </p>
+  </main>
+
+  <script>
+    const RETOS = [
+      {
+        numero: 1,
+        titulo: "Selección de una fuente de fósforo",
+        area: "Agronomía",
+        contenidos: ["Composición porcentual"],
+        etiquetas: ["DAP", "MAP", "P₂O₅", "Fósforo"],
+        contexto: "Una cooperativa agrícola debe seleccionar un fertilizante para un programa de manejo nutricional de cultivos. Dispone de fosfato diamónico, DAP 18-46-0, y fosfato monoamónico, MAP 11-52-0. El DAP contiene 46% de P₂O₅ y el MAP contiene 52% de P₂O₅. Para convertir P₂O₅ en fósforo se utilizará: P = P₂O₅ × 0,4364. Se compararán 250 g de cada fertilizante.",
+        datos: [
+          "DAP: 46% de P₂O₅.",
+          "MAP: 52% de P₂O₅.",
+          "Conversión: P = P₂O₅ × 0,4364.",
+          "Masa comparada: 250 g de cada fertilizante."
+        ],
+        pregunta: "¿Cuál de los dos fertilizantes aporta más fósforo elemental en 250 g de producto?",
+        preguntas: [
+          "¿Cuántos gramos de P₂O₅ aporta cada fertilizante en la masa analizada?",
+          "¿Cuántos gramos de fósforo elemental corresponden a esas cantidades?",
+          "¿Por qué el contenido de P de los fertilizantes se expresa convencionalmente como P₂O₅? ¿Esto significa que el fertilizante contenga o aporte P₂O₅?",
+          "¿Qué diferencia existe entre comparar porcentajes y comparar masas de fósforo?",
+          "¿Qué fertilizante debería seleccionar la cooperativa según este criterio?"
+        ],
+        producto: "Respuesta argumentada para la cooperativa, con cálculos de P₂O₅ y fósforo elemental."
+      },
+
+      {
+        numero: 2,
+        titulo: "Verificación del nitrógeno declarado en DAP y MAP",
+        area: "Agronomía",
+        contenidos: ["Composición porcentual"],
+        etiquetas: ["DAP", "MAP", "Nitrógeno", "Masa molar"],
+        contexto: "Un laboratorio de control de calidad debe comparar la cantidad de nitrógeno declarada en las etiquetas de dos fertilizantes con la composición teórica de sus fórmulas químicas. El DAP, (NH₄)₂HPO₄, tiene masa molar de 132,06 g/mol, contiene dos átomos de nitrógeno por unidad fórmula y su etiqueta declara 18% de N. El MAP, NH₄H₂PO₄, tiene masa molar de 115,03 g/mol, contiene un átomo de nitrógeno por unidad fórmula y su etiqueta declara 11% de N.",
+        datos: [
+          "DAP: fórmula (NH₄)₂HPO₄; masa molar: 132,06 g/mol; etiqueta: 18% N.",
+          "MAP: fórmula NH₄H₂PO₄; masa molar: 115,03 g/mol; etiqueta: 11% N.",
+          "DAP: dos átomos de N por unidad fórmula.",
+          "MAP: un átomo de N por unidad fórmula.",
+          "Masa atómica del N: 14,01 g/mol."
+        ],
+        pregunta: "¿Las etiquetas de nitrógeno de DAP y MAP coinciden con la composición teórica de sus fórmulas ideales?",
+        preguntas: [
+          "¿Qué masa de nitrógeno contiene una mol de DAP y una mol de MAP?",
+          "¿Cuál es el porcentaje teórico de nitrógeno en cada compuesto?",
+          "¿Qué diferencia existe entre el porcentaje teórico y el porcentaje declarado?",
+          "¿Qué hipótesis podría explicar esa diferencia sin considerarla una causa comprobada?",
+          "¿La etiqueta es incompatible con la fórmula o puede representar un producto comercial que no es completamente puro?"
+        ],
+        producto: "Informe comparativo entre la composición teórica y los valores declarados en las etiquetas."
+      },
+
+      {
+        numero: 3,
+        titulo: "Aporte de nitrógeno en un vivero forestal",
+        area: "Ámbito forestal",
+        contenidos: ["Composición porcentual", "Cantidad de sustancia"],
+        etiquetas: ["DAP", "MAP", "Nitrógeno", "Vivero"],
+        contexto: "Un vivero forestal dispone de 500 g de DAP 18-46-0 y 500 g de MAP 11-52-0. El responsable debe decidir cuál aporta más nitrógeno utilizando la composición declarada en las etiquetas.",
+        datos: [
+          "Masa de DAP analizada: 500 g.",
+          "Masa de MAP analizada: 500 g.",
+          "Contenido de N del DAP: 18%.",
+          "Contenido de N del MAP: 11%.",
+          "Masa atómica aproximada del N: 14,01 g/mol."
+        ],
+        pregunta: "¿Qué fertilizante aporta más nitrógeno en 500 g de producto?",
+        preguntas: [
+          "¿Qué masa de nitrógeno aporta el DAP?",
+          "¿Qué masa de nitrógeno aporta el MAP?",
+          "¿Cuántos moles de nitrógeno representa cada resultado?",
+          "¿Qué limitación tiene tomar una decisión considerando solamente el nitrógeno?",
+          "¿Qué fertilizante debería seleccionar el vivero según el criterio establecido?"
+        ],
+        producto: "Comparación cuantitativa de la masa y cantidad de sustancia de nitrógeno."
+      },
+
+      {
+        numero: 4,
+        titulo: "Aporte de fósforo por saco",
+        area: "Recursos naturales",
+        contenidos: ["Composición porcentual"],
+        etiquetas: ["DAP", "MAP", "P₂O₅", "Fósforo"],
+        contexto: "Un programa de recuperación de suelos degradados dispone de un saco de DAP 18-46-0 de 25 kg y un saco de MAP 11-52-0 de 20 kg. El DAP contiene 46% de P₂O₅ y el MAP contiene 52% de P₂O₅. Para convertir P₂O₅ en fósforo elemental se utilizará: P = P₂O₅ × 0,4364.",
+        datos: [
+          "DAP: masa del saco = 25 kg; contenido = 46% de P₂O₅.",
+          "MAP: masa del saco = 20 kg; contenido = 52% de P₂O₅.",
+          "Conversión: P = P₂O₅ × 0,4364."
+        ],
+        pregunta: "¿Qué saco aporta más fósforo elemental considerando simultáneamente el porcentaje de P₂O₅ y la masa total del saco?",
+        preguntas: [
+          "¿Cuántos kilogramos de P₂O₅ equivalente se declaran para cada saco?",
+          "¿Cuántos kilogramos de fósforo elemental aporta cada saco?",
+          "¿Por qué no basta con comparar 46% y 52%?",
+          "¿Qué efecto tiene la masa total de cada saco?",
+          "¿Qué saco debería seleccionar el programa?"
+        ],
+        producto: "Recomendación cuantitativa basada en el aporte total de fósforo elemental."
+      },
+
+      {
+        numero: 5,
+        titulo: "Composición porcentual de un fertilizante fosfatado",
+        area: "Agronomía",
+        contenidos: ["Composición porcentual"],
+        etiquetas: ["DAP", "MAP", "Nitrógeno", "Fósforo"],
+        contexto: "Una empresa agrícola desea verificar la composición elemental teórica de dos fertilizantes fosfatados antes de compararlos con sus etiquetas comerciales. El DAP es fosfato diamónico, fórmula (NH₄)₂HPO₄, masa molar 132,06 g/mol, etiqueta 18% N y 46% P₂O₅. El MAP es fosfato monoamónico, fórmula NH₄H₂PO₄, masa molar 115,03 g/mol, etiqueta 11% N y 52% P₂O₅. Para calcular fósforo elemental se utilizará P = P₂O₅ × 0,4364. Se analizará una muestra de 100 g de cada fertilizante.",
+        datos: [
+          "DAP: fórmula (NH₄)₂HPO₄; masa molar: 132,06 g/mol; etiqueta: 18% N y 46% P₂O₅.",
+          "MAP: fórmula NH₄H₂PO₄; masa molar: 115,03 g/mol; etiqueta: 11% N y 52% P₂O₅.",
+          "Conversión: P = P₂O₅ × 0,4364.",
+          "Masa comparada: 100 g de cada fertilizante."
+        ],
+        pregunta: "¿Qué diferencias existen entre la composición elemental teórica de DAP y MAP y los valores declarados en sus etiquetas?",
+        preguntas: [
+          "¿Cuál es el porcentaje teórico de nitrógeno en DAP y MAP?",
+          "¿Cuál es el porcentaje teórico de fósforo elemental en cada compuesto?",
+          "¿Qué masa de N y P elemental contiene una muestra de 100 g según la fórmula?",
+          "¿Qué diferencias existen entre los porcentajes teóricos y los valores declarados?",
+          "¿Qué conclusión puede formularse sobre la diferencia entre compuesto puro y producto comercial?"
+        ],
+        producto: "Tabla comparativa de composición teórica, valores de etiqueta y diferencias observadas."
+      },
+
+      {
+        numero: 6,
+        titulo: "Reactivo limitante en la producción de DAP",
+        area: "Agronomía",
+        contenidos: ["Estequiometría", "Reactivo limitante"],
+        etiquetas: ["DAP", "Reactivo limitante", "Moles"],
+        contexto: "Una planta piloto produce fosfato diamónico, DAP, a partir de amoníaco y ácido fosfórico. La reacción didáctica de producción es: 2 NH₃ + H₃PO₄ → (NH₄)₂HPO₄. Se dispone de 34,0 g de NH₃ y 49,0 g de H₃PO₄.",
+        datos: [
+          "Reacción: 2 NH₃ + H₃PO₄ → (NH₄)₂HPO₄.",
+          "NH₃ disponible: 34,0 g.",
+          "H₃PO₄ disponible: 49,0 g.",
+          "Masa molar NH₃: 17,03 g/mol.",
+          "Masa molar H₃PO₄: 98,00 g/mol.",
+          "Masa molar DAP: 132,06 g/mol."
+        ],
+        pregunta: "¿Cuál es el reactivo limitante y qué masa máxima de DAP puede producirse?",
+        preguntas: [
+          "¿Está correctamente balanceada la ecuación química?",
+          "¿Cuántos moles de NH₃ y H₃PO₄ están disponibles?",
+          "¿Qué relación molar exige la ecuación balanceada?",
+          "¿Cuál es el reactivo limitante?",
+          "¿Cuál es la masa teórica máxima de DAP?"
+        ],
+        producto: "Resolución estequiométrica completa, con identificación del reactivo limitante y masa teórica."
+      },
+
+      {
+        numero: 7,
+        titulo: "Producción de DAP considerando la pureza",
+        area: "Agronomía",
+        contenidos: ["Estequiometría", "Pureza", "Reactivo limitante"],
+        etiquetas: ["DAP", "Pureza", "Reactivo limitante"],
+        contexto: "Una empresa recibe materias primas comerciales para producir fosfato diamónico, DAP. Las materias primas no son completamente puras, por lo que no toda la masa recibida participa en la reacción. La reacción didáctica es: 2 NH₃ + H₃PO₄ → (NH₄)₂HPO₄.",
+        datos: [
+          "Masa comercial de NH₃: 34,0 g.",
+          "Pureza del NH₃: 95,0%.",
+          "Masa comercial de H₃PO₄: 49,0 g.",
+          "Pureza del H₃PO₄: 92,0%.",
+          "Masa molar NH₃: 17,03 g/mol.",
+          "Masa molar H₃PO₄: 98,00 g/mol.",
+          "Masa molar DAP: 132,06 g/mol."
+        ],
+        pregunta: "¿Qué masa teórica de DAP puede producirse al considerar la pureza de ambas materias primas?",
+        preguntas: [
+          "¿Qué masa efectiva de NH₃ y H₃PO₄ queda disponible después de considerar la pureza?",
+          "¿Cuántos moles efectivos de cada reactivo están disponibles?",
+          "¿Cuál es el reactivo limitante?",
+          "¿Qué masa teórica de DAP puede producirse?",
+          "¿Por qué no debe utilizarse directamente la masa comercial completa?"
+        ],
+        producto: "Cálculo de masas efectivas, moles, reactivo limitante y masa teórica de DAP."
+      },
+
+      {
+        numero: 8,
+        titulo: "Producción de MAP con pureza y rendimiento",
+        area: "Agronomía",
+        contenidos: ["Estequiometría", "Pureza", "Rendimiento"],
+        etiquetas: ["MAP", "Pureza", "Rendimiento"],
+        contexto: "Una planta piloto prepara fosfato monoamónico, MAP, para un ensayo de fertilización. El MAP tiene fórmula NH₄H₂PO₄ y masa molar de 115,03 g/mol. La reacción didáctica es: NH₃ + H₃PO₄ → NH₄H₂PO₄.",
+        datos: [
+          "Masa de NH₃: 20,0 g.",
+          "Pureza del NH₃: 95,0%.",
+          "Masa de H₃PO₄: 50,0 g.",
+          "Pureza del H₃PO₄: 92,0%.",
+          "Rendimiento del proceso: 87,0%.",
+          "Masa molar NH₃: 17,03 g/mol.",
+          "Masa molar H₃PO₄: 98,00 g/mol.",
+          "Masa molar MAP: 115,03 g/mol."
+        ],
+        pregunta: "¿Qué masa real de MAP puede obtenerse con las materias primas disponibles?",
+        preguntas: [
+          "¿Qué masas efectivas de NH₃ y H₃PO₄ deben utilizarse?",
+          "¿Cuál es el reactivo limitante en la reacción 1:1?",
+          "¿Cuál es la masa teórica de MAP?",
+          "¿Qué masa real se obtiene con un rendimiento de 87,0%?",
+          "¿Qué resultado debe informar el equipo?"
+        ],
+        producto: "Cálculo de producción teórica y real de MAP considerando pureza y rendimiento."
+      },
+
+      {
+        numero: 9,
+        titulo: "Factibilidad de producir una cantidad definida de DAP",
+        area: "Recursos naturales",
+        contenidos: ["Estequiometría", "Pureza", "Rendimiento"],
+        etiquetas: ["DAP", "Meta de producción", "Factibilidad"],
+        contexto: "Un laboratorio que prepara materiales para un ensayo de recuperación de suelos necesita producir 50,0 g de DAP. El DAP tiene fórmula (NH₄)₂HPO₄ y masa molar de 132,06 g/mol. La reacción didáctica es: 2 NH₃ + H₃PO₄ → (NH₄)₂HPO₄.",
+        datos: [
+          "NH₃ disponible: 26,0 g.",
+          "Pureza del NH₃: 95,0%.",
+          "H₃PO₄ disponible: 45,0 g.",
+          "Pureza del H₃PO₄: 92,0%.",
+          "Rendimiento: 87,0%.",
+          "Masa molar NH₃: 17,03 g/mol.",
+          "Masa molar H₃PO₄: 98,00 g/mol.",
+          "Masa molar DAP: 132,06 g/mol.",
+          "Meta: 50,0 g de DAP."
+        ],
+        pregunta: "¿Las materias primas disponibles permiten producir al menos 50,0 g de DAP?",
+        preguntas: [
+          "¿Qué masas efectivas de los reactivos están disponibles?",
+          "¿Cuál es el reactivo limitante?",
+          "¿Cuál es la producción teórica de DAP?",
+          "¿Cuál es la producción real considerando el rendimiento?",
+          "¿Se alcanza la meta de 50,0 g?"
+        ],
+        producto: "Informe de factibilidad con comparación entre producción real y meta."
+      },
+
+      {
+        numero: 10,
+        titulo: "Selección de una condición para producir MAP",
+        area: "Ámbito forestal",
+        contenidos: ["Estequiometría", "Pureza", "Rendimiento"],
+        etiquetas: ["MAP", "Condiciones de producción", "Comparación"],
+        contexto: "Un vivero que produce plantas para restauración forestal necesita preparar una cantidad limitada de MAP para un ensayo de fertilización. El equipo debe decidir cuál de dos condiciones de producción permite acercarse más a una meta de 25,0 g.",
+        datos: [
+          "Reacción: NH₃ + H₃PO₄ → NH₄H₂PO₄.",
+          "Condición A: NH₃ = 20,0 g; pureza = 95,0%.",
+          "Condición A: H₃PO₄ = 50,0 g; pureza = 92,0%.",
+          "Condición B: NH₃ = 30,0 g; pureza = 95,0%.",
+          "Condición B: H₃PO₄ = 30,0 g; pureza = 92,0%.",
+          "Rendimiento de ambas condiciones: 87,0%.",
+          "Masa molar MAP: 115,03 g/mol.",
+          "Meta: 25,0 g de MAP."
+        ],
+        pregunta: "¿Qué condición de producción permite acercarse más a la meta de 25,0 g de MAP?",
+        preguntas: [
+          "¿Qué masas efectivas de NH₃ y H₃PO₄ tiene cada condición?",
+          "¿Cuál es el reactivo limitante en cada condición?",
+          "¿Cuál es la producción real de MAP en cada condición?",
+          "¿Cuál de las dos condiciones se aproxima más a 25,0 g?",
+          "¿Qué modificación sería necesaria para alcanzar exactamente la meta?"
+        ],
+        producto: "Tabla comparativa de ambas condiciones y decisión justificada."
+      },
+
+      {
+        numero: 11,
+        titulo: "Contenido de glifosato equivalente ácido",
+        area: "Agronomía",
+        contenidos: ["Composición porcentual", "Cantidad de sustancia", "Ingredientes activos"],
+        etiquetas: ["Glifosato", "Ingrediente activo", "Equivalente ácido"],
+        contexto: "Un equipo de manejo agrícola debe registrar la cantidad de glifosato equivalente ácido presente en una formulación de Roundup PowerMAX. La etiqueta declara 39,8% m/m de glifosato equivalente ácido y 48,7% como sal potásica de glifosato. Para este reto se utilizará exclusivamente el valor de 39,8% m/m equivalente ácido.",
+        datos: [
+          "Glifosato equivalente ácido: 39,8% m/m.",
+          "Sal potásica declarada: 48,7%.",
+          "Fórmula de referencia: C₃H₈NO₅P.",
+          "Masa molar: 169,07 g/mol.",
+          "Masa de formulación analizada: 750 g."
+        ],
+        pregunta: "¿Qué masa y cantidad de sustancia de glifosato equivalente ácido contiene la muestra analizada?",
+        preguntas: [
+          "¿Qué masa de glifosato equivalente ácido está presente?",
+          "¿Cuántos moles representa esa masa?",
+          "¿Qué diferencia existe entre equivalente ácido y sal potásica?",
+          "¿Cuál es el porcentaje másico de fósforo en el glifosato equivalente ácido?",
+          "¿Qué conclusión puede comunicarse sin confundir los dos porcentajes?"
+        ],
+        producto: "Cálculo de masa, moles y composición elemental del glifosato equivalente ácido."
+      },
+
+      {
+        numero: 12,
+        titulo: "Contenido de atrazina en una formulación",
+        area: "Agronomía",
+        contenidos: ["Composición porcentual", "Cantidad de sustancia", "Ingredientes activos"],
+        etiquetas: ["Atrazina", "Ingrediente activo", "Nitrógeno"],
+        contexto: "Un equipo técnico analiza una formulación de Atrazine 4L para verificar la masa de ingrediente activo declarada en la etiqueta. Atrazine 4L declara 45,45% m/m de atrazina y 54,55% de otros ingredientes.",
+        datos: [
+          "Contenido de atrazina: 45,45% m/m.",
+          "Otros ingredientes: 54,55%.",
+          "Fórmula de la atrazina: C₈H₁₄ClN₅.",
+          "Masa molar: 215,68 g/mol.",
+          "Masa de formulación analizada: 1.200 g."
+        ],
+        pregunta: "¿Qué masa y cantidad de sustancia de atrazina están presentes en la muestra?",
+        preguntas: [
+          "¿Qué masa de atrazina contiene la muestra?",
+          "¿Cuántos moles de atrazina representa esa masa?",
+          "¿Cuál es el porcentaje de nitrógeno en la atrazina?",
+          "¿Qué masa de nitrógeno está presente en la atrazina calculada?",
+          "¿Cuántos moles de átomos de nitrógeno están presentes?"
+        ],
+        producto: "Cálculo de masa de atrazina, moles de compuesto y aporte de nitrógeno."
+      },
+
+      {
+        numero: 13,
+        titulo: "Comparación de masa y moles de ingredientes activos",
+        area: "Recursos naturales",
+        contenidos: ["Composición porcentual", "Cantidad de sustancia", "Ingredientes activos"],
+        etiquetas: ["Glifosato", "Atrazina", "Moles", "Comparación"],
+        contexto: "Un programa de restauración ecológica registra dos formulaciones de pesticidas: Roundup PowerMAX y Atrazine 4L. El equipo debe comparar la masa y la cantidad de sustancia de sus ingredientes activos. No se solicita determinar cuál producto es más eficaz, seguro o conveniente.",
+        datos: [
+          "Roundup PowerMAX: 39,8% m/m de glifosato equivalente ácido.",
+          "Glifosato: fórmula C₃H₈NO₅P; masa molar 169,07 g/mol.",
+          "Atrazine 4L: 45,45% m/m de atrazina.",
+          "Atrazina: fórmula C₈H₁₄ClN₅; masa molar 215,68 g/mol.",
+          "Masa comparada: 500 g de cada formulación."
+        ],
+        pregunta: "¿Qué formulación contiene más masa de ingrediente activo y cuál contiene más cantidad de sustancia en moles?",
+        preguntas: [
+          "¿Qué masa de ingrediente activo contiene cada formulación?",
+          "¿Cuántos moles representa el ingrediente activo de cada producto?",
+          "¿Por qué el producto con mayor masa de ingrediente activo no necesariamente presenta más moles?",
+          "¿Qué diferencia existe entre masa, cantidad de sustancia y porcentaje declarado?",
+          "¿Qué conclusión química puede establecerse sin afirmar cuál producto es mejor?"
+        ],
+        producto: "Tabla comparativa de masa de ingrediente activo y cantidad de sustancia."
+      },
+
+      {
+        numero: 14,
+        titulo: "Comparación del nitrógeno en glifosato y atrazina",
+        area: "Ámbito forestal",
+        contenidos: ["Composición porcentual"],
+        etiquetas: ["Glifosato", "Atrazina", "Nitrógeno"],
+        contexto: "Un vivero forestal compara la composición elemental de dos ingredientes activos presentes en productos de manejo vegetal. Se analizarán 100 g de cada compuesto puro.",
+        datos: [
+          "Glifosato: fórmula C₃H₈NO₅P; masa molar 169,07 g/mol; un átomo de N.",
+          "Atrazina: fórmula C₈H₁₄ClN₅; masa molar 215,68 g/mol; cinco átomos de N.",
+          "Masa atómica del N: 14,01 g/mol.",
+          "Masa comparada: 100 g de cada compuesto puro."
+        ],
+        pregunta: "¿Cuál de los dos ingredientes activos contiene mayor porcentaje másico de nitrógeno?",
+        preguntas: [
+          "¿Qué masa de nitrógeno contiene un mol de cada compuesto?",
+          "¿Cuál es el porcentaje másico de nitrógeno en cada ingrediente activo?",
+          "¿Cuántos gramos de nitrógeno están presentes en 100 g de cada compuesto?",
+          "¿Cómo influyen el número de átomos de N y la masa molar?",
+          "¿Qué conclusión puede establecerse y qué no puede inferirse del porcentaje de N?"
+        ],
+        producto: "Comparación de composición másica de nitrógeno en ambos ingredientes activos."
+      },
+
+      {
+        numero: 15,
+        titulo: "Comparación de dos formulaciones mediante composición e ingrediente activo",
+        area: "Recursos naturales",
+        contenidos: ["Composición porcentual", "Cantidad de sustancia", "Ingredientes activos"],
+        etiquetas: ["Glifosato", "Atrazina", "Composición elemental"],
+        contexto: "Un centro de manejo de vegetación en un área de conservación debe registrar dos formulaciones de pesticidas. El análisis se limitará a la masa de ingrediente activo, la cantidad de sustancia y la composición elemental. No se deberá recomendar un producto ni establecer conclusiones sobre eficacia, toxicidad o impacto ambiental. Se analizarán 250 g de cada formulación.",
+        datos: [
+          "Roundup PowerMAX: 39,8% m/m de glifosato equivalente ácido.",
+          "Glifosato: fórmula C₃H₈NO₅P; masa molar 169,07 g/mol.",
+          "Composición aproximada del glifosato: C 21,3%; H 4,8%; N 8,3%; O 47,3%; P 18,3%.",
+          "Atrazine 4L: 45,45% m/m de atrazina.",
+          "Atrazina: fórmula C₈H₁₄ClN₅; masa molar 215,68 g/mol.",
+          "Composición aproximada de la atrazina: C 44,5%; H 6,5%; N 32,5%; Cl 16,4%.",
+          "Masa comparada: 250 g de cada formulación."
+        ],
+        pregunta: "¿Qué diferencias químicas pueden identificarse entre ambas formulaciones a partir de la masa de ingrediente activo, la cantidad de sustancia y la composición elemental?",
+        preguntas: [
+          "¿Qué masa de ingrediente activo contiene cada formulación en 250 g?",
+          "¿Cuántos moles de ingrediente activo representa cada masa?",
+          "¿Qué elemento presenta mayor porcentaje en cada ingrediente activo?",
+          "¿Qué diferencia existe entre composición elemental y porcentaje de ingrediente activo?",
+          "¿Qué conclusión química puede comunicarse sin recomendar un producto?"
+        ],
+        producto: "Tabla comparativa de masa de ingrediente activo, moles y composición elemental."
+      },
+
+      {
+        numero: 16,
+        titulo: "Comparación de dos concentrados de cobre",
+        area: "Recursos naturales",
+        contenidos: ["Composición porcentual", "Cantidad de sustancia", "Minerales"],
+        etiquetas: ["Calcopirita", "Bornita", "Cobre", "Minerales"],
+        contexto: "Una empresa minera está evaluando dos concentrados provenientes de diferentes zonas de explotación. Ambos contienen minerales de cobre, pero presentan diferente composición mineralógica y diferente contenido de mineral de interés. El laboratorio comparará únicamente la masa del mineral de cobre, la cantidad de sustancia y la composición elemental.",
+        datos: [
+          "Concentrado A: 39,8% m/m de calcopirita, CuFeS₂, equivalente.",
+          "Masa molar de CuFeS₂: 183,52 g/mol.",
+          "Composición aproximada de la calcopirita: Cu 34,6%; Fe 30,4%; S 35,0%.",
+          "Concentrado B: 45,45% m/m de bornita, Cu₅FeS₄, equivalente.",
+          "Masa molar de Cu₅FeS₄: 501,84 g/mol.",
+          "Composición aproximada de la bornita: Cu 63,3%; Fe 11,1%; S 25,6%.",
+          "Masa comparada: 250 g de cada concentrado."
+        ],
+        pregunta: "¿Qué materia prima debería seleccionar la empresa minera para obtener una mayor cantidad de cobre al procesar la misma masa de materia prima?",
+        preguntas: [
+          "¿Qué masa de mineral y qué masa de cobre están presentes en 250 g de cada concentrado?",
+          "¿Cuántos moles de calcopirita y de bornita están presentes?",
+          "¿Qué diferencia existe entre el porcentaje de mineral de interés del concentrado y el porcentaje de cobre dentro de ese mineral?",
+          "¿Cuál de los dos concentrados presenta mayor cantidad de cobre?",
+          "¿Por qué un concentrado con mayor porcentaje de mineral de interés no necesariamente contiene mayor cantidad de cobre?"
+        ],
+        producto: "Comparación cuantitativa de ambos concentrados y selección justificada según la masa de cobre."
+      },
+
+      {
+        numero: 17,
+        titulo: "Comparación de dos concentrados de litio",
+        area: "Recursos naturales",
+        contenidos: ["Composición porcentual", "Cantidad de sustancia", "Minerales"],
+        etiquetas: ["Espodumena", "Petalita", "Litio", "Minerales"],
+        contexto: "Una empresa minera evalúa dos concentrados minerales provenientes de diferentes yacimientos para determinar cuál resulta más conveniente como materia prima para la obtención de litio. Ambos concentrados contienen minerales de litio, pero presentan diferente composición química y diferente proporción dentro de cada concentrado.",
+        datos: [
+          "Concentrado A: 40,0% m/m de espodumena, LiAlSi₂O₆.",
+          "Concentrado B: 55,0% m/m de petalita, LiAlSi₄O₁₀.",
+          "Masa comparada: 500 g de cada concentrado.",
+          "Masas atómicas aproximadas: Li = 6,94 g/mol; Al = 26,98 g/mol; Si = 28,09 g/mol; O = 16,00 g/mol."
+        ],
+        pregunta: "¿Qué materia prima debería seleccionar la empresa minera para obtener una mayor cantidad de litio al procesar la misma masa de materia prima?",
+        preguntas: [
+          "¿Qué masa de espodumena y de petalita está presente en 500 g de cada concentrado?",
+          "¿Cuántos moles de espodumena y petalita están presentes?",
+          "¿Cuál es la composición porcentual en masa de cada elemento?",
+          "¿Qué masa de litio está contenida en 500 g de cada concentrado?",
+          "¿Por qué un concentrado con mayor porcentaje de mineral de interés no necesariamente contiene una mayor cantidad de litio?"
+        ],
+        producto: "Cálculo comparativo de masa de mineral, composición elemental y masa de litio."
+      }
+    ];
+
+    const listaRetos = document.getElementById("listaRetos");
+    const workspace = document.getElementById("workspace");
+    const contador = document.getElementById("contador");
+    const sinResultados = document.getElementById("sinResultados");
+    const buscar = document.getElementById("buscar");
+    const filtroArea = document.getElementById("filtroArea");
+    const filtroContenido = document.getElementById("filtroContenido");
+    const limpiarFiltros = document.getElementById("limpiarFiltros");
+
+    let retoActivo = null;
+
+    function escaparHTML(texto) {
+      return String(texto)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function textoReto(reto) {
+      return [
+        reto.numero,
+        reto.titulo,
+        reto.area,
+        reto.contenidos.join(" "),
+        reto.etiquetas.join(" "),
+        reto.contexto,
+        reto.datos.join(" "),
+        reto.pregunta,
+        reto.preguntas.join(" "),
+        reto.producto
+      ].join(" ").toLowerCase();
+    }
+
+    function obtenerFiltrados() {
+      const termino = buscar.value.trim().toLowerCase();
+      const area = filtroArea.value;
+      const contenido = filtroContenido.value;
+
+      return RETOS.filter(reto => {
+        const coincideTexto =
+          !termino || textoReto(reto).includes(termino);
+
+        const coincideArea =
+          !area || reto.area === area;
+
+        const coincideContenido =
+          !contenido || reto.contenidos.includes(contenido);
+
+        return coincideTexto && coincideArea && coincideContenido;
+      });
+    }
+
+    function renderizarLista() {
+      const filtrados = obtenerFiltrados();
+
+      listaRetos.innerHTML = "";
+      contador.textContent =
+        `${filtrados.length} de ${RETOS.length} retos disponibles`;
+
+      sinResultados.style.display =
+        filtrados.length === 0 ? "block" : "none";
+
+      filtrados.forEach(reto => {
+        const boton = document.createElement("button");
+
+        boton.type = "button";
+        boton.className = "reto-button";
+
+        if (retoActivo === reto.numero) {
+          boton.classList.add("active");
+        }
+
+        boton.innerHTML = `
+          <strong>Reto ${reto.numero}. ${escaparHTML(reto.titulo)}</strong>
+          <small>${escaparHTML(reto.area)} · ${escaparHTML(reto.contenidos.join(" · "))}</small>
+        `;
+
+        boton.addEventListener("click", () => seleccionarReto(reto.numero));
+        listaRetos.appendChild(boton);
+      });
+    }
+
+    function construirDatos(reto) {
+      return `
+        <div class="data-box">
+          <ul>
+            ${reto.datos.map(dato => `<li>${escaparHTML(dato)}</li>`).join("")}
+          </ul>
+        </div>
+      `;
+    }
+
+    function seleccionarReto(numero) {
+      const reto = RETOS.find(item => item.numero === numero);
+
+      if (!reto) {
+        return;
+      }
+
+      retoActivo = numero;
+      renderizarLista();
+
+      workspace.innerHTML = `
+        <h2>Reto ${reto.numero}. ${escaparHTML(reto.titulo)}</h2>
+
+        <p class="subtitle">
+          Analicen el caso, desarrollen los cálculos y preparen una respuesta
+          fundamentada en papelógrafo u hojas blancas.
+        </p>
+
+        <div class="tags">
+          <span class="tag blue">${escaparHTML(reto.area)}</span>
+          ${reto.contenidos.map(contenido =>
+            `<span class="tag purple">${escaparHTML(contenido)}</span>`
+          ).join("")}
+          ${reto.etiquetas.map(etiqueta =>
+            `<span class="tag green">${escaparHTML(etiqueta)}</span>`
+          ).join("")}
+        </div>
+
+        <section class="section">
+          <h3>1. Contexto</h3>
+          <p>${escaparHTML(reto.contexto)}</p>
+        </section>
+
+        <section class="section">
+          <h3>2. Datos disponibles</h3>
+          ${construirDatos(reto)}
+        </section>
+
+        <section class="section">
+          <h3>3. Pregunta principal</h3>
+          <div class="main-question">
+            ${escaparHTML(reto.pregunta)}
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>4. Preguntas guía</h3>
+          <ol class="questions">
+            ${reto.preguntas.map(pregunta =>
+              `<li>${escaparHTML(pregunta)}</li>`
+            ).join("")}
+          </ol>
+        </section>
+
+        <section class="section">
+          <h3>5. Producto esperado</h3>
+          <div class="product-box">
+            <p>${escaparHTML(reto.producto)}</p>
+            <p>El trabajo debería incluir:</p>
+            <ul>
+              <li>Identificación de los datos relevantes.</li>
+              <li>Fórmulas o relaciones químicas utilizadas.</li>
+              <li>Desarrollo ordenado de los cálculos.</li>
+              <li>Unidades en cada resultado.</li>
+              <li>Respuesta directa a la pregunta principal.</li>
+              <li>Una breve limitación o condición de la conclusión.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>6. Orientaciones para el trabajo grupal</h3>
+          <div class="data-box">
+            <ul>
+              <li>Distribuyan los cálculos y revisen conjuntamente el resultado final.</li>
+              <li>No confundan porcentaje en masa con masa total de sustancia.</li>
+              <li>Verifiquen que las unidades sean coherentes.</li>
+              <li>Utilicen cifras significativas razonables.</li>
+              <li>No formulen conclusiones que excedan los datos del reto.</li>
+              <li>Si utilizan AgroChemBot, verifiquen sus cálculos y comprendan el procedimiento.</li>
+            </ul>
+          </div>
+        </section>
+      `;
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    function limpiarTodosLosFiltros() {
+      buscar.value = "";
+      filtroArea.value = "";
+      filtroContenido.value = "";
+      renderizarLista();
+    }
+
+    buscar.addEventListener("input", renderizarLista);
+    filtroArea.addEventListener("change", renderizarLista);
+    filtroContenido.addEventListener("change", renderizarLista);
+    limpiarFiltros.addEventListener("click", limpiarTodosLosFiltros);
+
+    renderizarLista();
+  </script>
+
+</body>
+</html>
