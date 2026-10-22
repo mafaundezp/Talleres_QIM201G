@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Taller Colaborativo 2 de QIM201G con 18 retos de química aplicada.">
+  <title>Taller Colaborativo 2 — QIM201G</title>
+  <style>
+    :root {
+      --azul: #123b5d;
+      --azul-medio: #2d6a8a;
+      --azul-claro: #eaf3f8;
+      --morado: #6d28d9;
+      --morado-claro: #f5f3ff;
+      --verde: #166534;
+      --verde-claro: #f0fdf4;
+      --amarillo: #fff7df;
+      --texto: #1f2937;
+      --gris: #64748b;
+      --borde: #cbd5e1;
+      --fondo: #f8fafc;
+      --blanco: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    header {
+      padding: 32px 5vw 28px;
+      background: linear-gradient(135deg, var(--azul), var(--azul-medio));
+      color: white;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      line-height: 1.2;
+    }
+
+    header h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-weight: normal;
+    }
+
+    header p { max-width: 1100px; margin: 6px 0; }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 5vw;
+      background: white;
+      border-bottom: 1px solid var(--borde);
+      box-shadow: 0 2px 6px rgba(0,0,0,.07);
+    }
+
+    .toolbar label { color: var(--azul); font-weight: bold; }
+
+    .toolbar input,
+    .toolbar select,
+    .toolbar button {
+      min-height: 42px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font: inherit;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      border: 1px solid var(--borde);
+      background: white;
+      color: var(--texto);
+    }
+
+    .toolbar input { min-width: 220px; flex: 1 1 220px; }
+    .toolbar select { min-width: 210px; flex: 0 1 240px; }
+
+    .toolbar button {
+      border: none;
+      background: var(--morado);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .toolbar button:hover { filter: brightness(1.1); }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #f59e0b;
+      outline-offset: 2px;
+    }
+
+    .container {
+      width: min(1400px, 92%);
+      margin: 0 auto;
+      padding: 24px 0 55px;
+    }
+
+    .notice {
+      margin-bottom: 22px;
+      padding: 17px 19px;
+      border-left: 5px solid var(--azul);
+      border-radius: 7px;
+      background: var(--azul-claro);
+    }
+
+    .notice h2 {
+      margin: 0 0 8px;
+      color: var(--azul);
+      font-size: 1.2rem;
+    }
+
+    .notice p { margin: 7px 0; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(270px, .78fr) minmax(500px, 1.8fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel, .workspace {
+      border: 1px solid var(--borde);
+      border-radius: 9px;
+      background: white;
+      box-shadow: 0 2px 7px rgba(0,0,0,.06);
+    }
+
+    .panel {
+      position: sticky;
+      top: 78px;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding: 17px;
+    }
+
+    .panel h2, .workspace h2 { margin-top: 0; color: var(--azul); }
+    .panel-summary { color: var(--gris); font-size: .93rem; }
+
+    .reto-list { display: grid; gap: 8px; margin-top: 13px; }
+
+    .reto-button {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--borde);
+      border-radius: 7px;
+      background: #f8fafc;
+      color: var(--texto);
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .reto-button:hover, .reto-button.active {
+      border-color: var(--azul-medio);
+      background: var(--azul-claro);
+    }
+
+    .reto-button strong {
+      display: block;
+      color: var(--azul);
+      line-height: 1.3;
+    }
+
+    .reto-button small {
+      display: block;
+      margin-top: 4px;
+      color: var(--gris);
+    }
+
+    .workspace { min-width: 0; padding: 25px; }
+    .workspace h2 { margin-bottom: 7px; font-size: 1.6rem; line-height: 1.25; }
+    .subtitle { margin-top: 0; color: var(--gris); }
+
+    .tags { margin: 12px 0 17px; }
+    .tag {
+      display: inline-block;
+      margin: 3px 5px 3px 0;
+      padding: 4px 10px;
+      border-radius: 18px;
+      background: #fff3d6;
+      color: #854d0e;
+      font-size: .84rem;
+    }
+    .tag.blue { background: var(--azul-claro); color: var(--azul); }
+    .tag.purple { background: var(--morado-claro); color: #6b21a8; }
+    .tag.green { background: var(--verde-claro); color: var(--verde); }
+
+    .section { margin: 23px 0; }
+    .section h3 {
+      margin: 0 0 9px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #e2e8f0;
+      color: var(--azul);
+      font-size: 1.1rem;
+    }
+
+    .main-question {
+      padding: 16px 18px;
+      border: 1px solid #fcd34d;
+      border-radius: 7px;
+      background: var(--amarillo);
+      font-size: 1.06rem;
+      font-weight: bold;
+    }
+
+    .data-box {
+      padding: 14px 16px;
+      border-left: 4px solid var(--verde);
+      border-radius: 6px;
+      background: var(--verde-claro);
+    }
+
+    .data-box ul { margin: 0; padding-left: 22px; }
+    .questions { padding-left: 24px; }
+    .questions li { margin-bottom: 11px; }
+
+    .product-box {
+      padding: 14px 16px;
+      border-left: 4px solid var(--morado);
+      border-radius: 7px;
+      background: var(--morado-claro);
+    }
+
+    .initial, .empty {
+      padding: 28px 16px;
+      color: var(--gris);
+      text-align: center;
+    }
+
+    .empty {
+      border: 1px dashed var(--borde);
+      border-radius: 7px;
+    }
+
+    .footer-note { margin-top: 24px; color: var(--gris); font-size: .9rem; }
+
+    @media (max-width: 1000px) {
+      .toolbar { position: static; }
+      .layout { grid-template-columns: 1fr; }
+      .panel { position: static; max-height: none; }
+      .reto-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 650px) {
+      .container { width: 94%; }
+      .toolbar input, .toolbar select, .toolbar button {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 100%;
+      }
+      .reto-list { grid-template-columns: 1fr; }
+      .workspace { padding: 17px; }
+      .workspace h2 { font-size: 1.35rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Taller Colaborativo N.° 2 de Química Aplicada</h1>
+    <h2>QIM201G — Química General y Química Orgánica</h2>
+    <p>Documento interactivo con 18 retos contextualizados en Agronomía, ámbito forestal y Recursos Naturales.</p>
+    <p><strong>Uso:</strong> seleccione un reto para consultar su contexto, datos y preguntas.</p>
+  </header>
+
+  <div class="toolbar" role="search" aria-label="Buscar y filtrar retos">
+    <label for="buscar">Buscar:</label>
+    <input id="buscar" type="search" placeholder="pH, nitratos, equilibrio, zinc…">
+
+    <label for="filtroArea">Área:</label>
+    <select id="filtroArea">
+      <option value="">Todas las áreas</option>
+      <option value="Agronomía">Agronomía</option>
+      <option value="Ámbito forestal">Ámbito forestal</option>
+      <option value="Recursos naturales">Recursos naturales</option>
+    </select>
+
+    <label for="filtroBloque">Bloque:</label>
+    <select id="filtroBloque">
+      <option value="">Todos los bloques</option>
+      <option value="Disoluciones y concentración">Disoluciones y concentración</option>
+      <option value="Propiedades coligativas">Propiedades coligativas</option>
+      <option value="Equilibrio químico">Equilibrio químico</option>
+      <option value="Ácidos, bases y amortiguadores">Ácidos, bases y amortiguadores</option>
+    </select>
+
+    <button id="limpiarFiltros" type="button">Limpiar filtros</button>
+  </div>
+
+  <main class="container">
+<section class="notice" id="instrucciones-y-documentos">
+  <h2>Instrucciones y documentos del Taller 2</h2>
+
+  <p>
+    Antes de comenzar, todos los estudiantes deben conocer las instrucciones
+    y la pauta de evaluación. Cada reto tiene una tarjeta de preguntas para
+    el grupo participante y una tarjeta de respuestas para el grupo evaluador.
+    La tarjeta de respuestas no debe compartirse con el grupo participante
+    antes de que finalice su presentación.
+  </p>
+
+  <ol>
+    <li>
+      <strong>Resolución de retos — 45 minutos:</strong> todos los grupos
+      trabajan simultáneamente como participantes. Analizan el contexto,
+      identifican datos y supuestos relevantes, y responden las tres preguntas.
+      Cuando corresponda, presentan cálculos, unidades e interpretación; en
+      preguntas conceptuales, explican el razonamiento.
+    </li>
+    <li>
+      <strong>Coevaluación — 25 minutos:</strong> el profesor asigna los grupos
+      evaluadores. Cada estudiante participa en la evaluación del trabajo de
+      otro grupo, utilizando la tarjeta de respuestas correspondiente y la
+      pauta general.
+    </li>
+  </ol>
+
+  <p>
+    Durante la presentación, el grupo evaluador puede pedir aclaraciones, sin
+    proporcionar la solución ni modificar el alcance del reto. Después,
+    entrega una retroalimentación breve con un aspecto logrado y uno por mejorar.
+    El profesor evalúa independientemente.
+  </p>
+
+  <p>
+    <strong>Evaluación:</strong> la calificación grupal combina coevaluación
+    (30 %) y evaluación del profesor (70 %). Todos los integrantes del grupo
+    participante reciben la misma calificación. La pauta y la hoja de
+    calificaciones contienen los criterios y el procedimiento detallados.
+  </p>
+
+  <h3>Documentos del taller</h3>
+  <ul>
+    <li>
+      <a href="https://cursos.canvas.uc.cl/courses/106325/files/folder/Taller_2?preview=16247021"
+         target="_blank" rel="noopener">
+        Ver “Indicaciones para el desarrollo del taller y pauta general de evaluación”
+      </a>
+    </li>
+    <li>
+      <a href="https://cursos.canvas.uc.cl/courses/106325/files/folder/Taller_2?preview=16255662"
+         target="_blank" rel="noopener">
+        Ver “Hoja de calificaciones”
+      </a>
+    </li>
+  </ul>
+
+  <p>
+    <small>
+      La tarjeta de respuestas es para el grupo evaluador; no debe mostrarse
+      al grupo participante antes de la presentación.
+    </small>
+  </p>
+</section>
+
+    <div class="layout">
+      <aside class="panel" aria-label="Navegación de retos">
+        <h2>Seleccionar reto</h2>
+        <p id="contador" class="panel-summary" aria-live="polite"></p>
+        <div id="listaRetos" class="reto-list"></div>
+        <div id="sinResultados" class="empty" style="display:none;" role="status">
+          No se encontraron retos con estos criterios.
+        </div>
+      </aside>
+
+      <section id="workspace" class="workspace" aria-live="polite">
+        <div class="initial">
+          <h2>Seleccione un reto</h2>
+          <p>Utilice el panel de navegación para comenzar.</p>
+        </div>
+      </section>
+    </div>
+
+    <p class="footer-note">
+      QIM201G — Taller Colaborativo N.° 2. Esta página permite consultar los retos; no guarda ni envía respuestas.
+    </p>
+  </main>
+
+  <script>
+    const RETOS = [
+      {
+        numero: 1,
+        titulo: "Preparación de una disolución fertilizante",
+        area: "Agronomía",
+        bloque: "Disoluciones y concentración",
+        contenidos: ["% m/V", "Pureza", "Dilución"],
+        contexto: "En un vivero se necesita preparar 20,0 L de una disolución de nitrato de potasio (KNO₃) al 0,150 % m/V para un ensayo de fertilización. Se dispone de dos productos: un fertilizante sólido con una pureza del 95,0 % m/m de KNO₃ y una disolución concentrada del mismo compuesto al 2,00 % m/m, cuya densidad es 1,05 g/mL. Los demás componentes de ambos productos son solubles y no reaccionan con el KNO₃. La concentración indicada es la establecida para este ensayo.",
+        preguntas: [
+          "Si se utiliza el fertilizante sólido, ¿qué masa del producto comercial debe pesarse para preparar los 20,0 L de disolución? Justifique el cálculo considerando su pureza.",
+          "Si se utiliza la disolución concentrada, ¿qué volumen debe medirse y cómo debe realizarse la preparación para obtener los 20,0 L a la concentración solicitada?",
+          "Un equipo mide 200 mL de la disolución concentrada y agrega agua hasta completar un volumen final de 20,0 L. ¿Qué concentración de KNO₃ obtiene, expresada en % m/V, y cómo puede corregir la preparación utilizando únicamente agua, sin desechar disolución? Considere que dispone de un recipiente suficientemente grande y que los volúmenes son aditivos durante esta corrección."
+        ],
+        producto: "Desarrollo de cálculos comparativos para preparar la disolución con cada producto disponible."
+      },
+      {
+        numero: 2,
+        titulo: "Aprovechamiento de disoluciones disponibles",
+        area: "Agronomía",
+        bloque: "Disoluciones y concentración",
+        contenidos: ["% m/m", "Balance de masa", "% m/V", "ppm", "Dilución"],
+        contexto: "En una estación experimental agrícola se necesitan 15,0 kg de una disolución de urea al 8,00 % m/m para utilizarla como disolución madre en ensayos de fertilización. Se dispone de dos disoluciones de urea: una al 5,00 % m/m y otra al 20,0 % m/m. Se desea preparar la mezcla utilizando únicamente estas dos disoluciones. La densidad de la disolución resultante al 8,00 % m/m es 1,02 g/mL. Considere que no hay pérdidas de material ni reacciones químicas durante la preparación.",
+        preguntas: [
+          "¿Qué masa de cada disolución debe mezclarse para obtener los 15,0 kg de disolución madre al 8,00 % m/m? Justifique mediante un balance de masa de urea.",
+          "Un estudiante afirma que la disolución madre contiene 8,00 g de urea por cada 100 mL de disolución. ¿Es correcta su afirmación? Determine la concentración real expresada en % m/V.",
+          "Para uno de los ensayos se toman 250 mL de la disolución madre y se diluyen con agua hasta un volumen final de 5,00 L. ¿Cuál es la concentración de urea obtenida en mg/L y en ppm expresadas como mg/kg? Considere que la densidad de esta disolución diluida es aproximadamente 1,00 g/mL."
+        ],
+        producto: "Resolución del balance de masa y de las conversiones de concentración solicitadas."
+      },
+      {
+        numero: 3,
+        titulo: "Mezcla de aguas subterráneas para un ensayo de restauración",
+        area: "Recursos naturales",
+        bloque: "Disoluciones y concentración",
+        contenidos: ["Conversión de concentración", "ppm", "Balance de masa", "Evaporación"],
+        contexto: "Un proyecto de restauración de vegetación nativa utiliza agua de dos pozos para abastecer un vivero. El laboratorio informa que el agua del pozo A contiene 0,00800 % m/V de nitratos (NO₃⁻), mientras que la del pozo B contiene 20,0 mg/L. Para un ensayo se necesitan 12,0 m³ de una mezcla con 35,0 ppm de nitratos, concentración definida por el equipo responsable del proyecto y no como límite normativo. Considere que todas las concentraciones se refieren al ion NO₃⁻, que la densidad de ambas aguas y de sus mezclas es aproximadamente 1,00 g/mL, y que los volúmenes son aditivos. No hay reacciones ni pérdidas de nitratos durante la mezcla.",
+        preguntas: [
+          "¿Cuál es la concentración de nitratos del pozo A expresada en mg/L y en ppm en masa? ¿Cuántos gramos de nitratos contiene cada metro cúbico de esta agua?",
+          "¿Qué volumen de agua de cada pozo debe utilizarse para preparar los 12,0 m³ de mezcla con 35,0 ppm de nitratos? Justifique mediante un balance de masa.",
+          "Después de preparar la mezcla, esta permanece en un estanque abierto y pierde por evaporación el 10,0 % de su volumen inicial. Suponiendo que los nitratos permanecen en el estanque, ¿cuál es la nueva concentración en ppm y qué volumen de agua sin nitratos debe agregarse para recuperar las 35,0 ppm?"
+        ],
+        producto: "Cálculos de conversión, balance de masa y efecto de la evaporación sobre la concentración."
+      },
+      {
+        numero: 4,
+        titulo: "Preparación de una disolución de un micronutriente",
+        area: "Ámbito forestal",
+        bloque: "Disoluciones y concentración",
+        contenidos: ["Composición porcentual", "Pureza", "ppm", "Dilución"],
+        contexto: "En un vivero forestal se realizará un ensayo sobre el aporte de zinc a plántulas de especies nativas. Para ello, se necesitan 2,00 L de una disolución madre que contenga 250 mg/L de zinc (Zn). Se dispone de sulfato de zinc heptahidratado (ZnSO₄·7H₂O) con una pureza del 98,0 % m/m. Las impurezas no contienen zinc y son solubles en agua. Posteriormente, la disolución madre se utilizará para preparar 5,00 L de una disolución de trabajo con 2,50 ppm de zinc. Estas concentraciones corresponden al diseño del ensayo, no a una recomendación general de fertilización.",
+        datos: [
+          "Masa molar del Zn: 65,38 g/mol.",
+          "Masa molar del ZnSO₄·7H₂O: 287,54 g/mol.",
+          "Densidad de la disolución de trabajo: aproximadamente 1,00 g/mL."
+        ],
+        preguntas: [
+          "¿Qué porcentaje en masa de zinc contiene el ZnSO₄·7H₂O puro y cuántos miligramos de zinc aporta un gramo del producto comercial disponible?",
+          "¿Qué masa del producto comercial debe pesarse para preparar los 2,00 L de disolución madre con 250 mg/L de zinc? Describa brevemente cómo debe prepararse la disolución.",
+          "¿Qué volumen de la disolución madre debe utilizarse para preparar los 5,00 L de disolución de trabajo con 2,50 ppm de zinc? Justifique la equivalencia de unidades empleada y describa cómo realizar la dilución."
+        ],
+        producto: "Cálculo del aporte de Zn, masa del producto comercial y volumen requerido para la dilución."
+      },
+      {
+        numero: 5,
+        titulo: "Disminución de la presión de vapor en una disolución de azúcar",
+        area: "Ámbito forestal",
+        bloque: "Propiedades coligativas",
+        contenidos: ["Fracción molar", "Ley de Raoult", "Presión de vapor"],
+        contexto: "En un laboratorio de propagación de plantas nativas se preparan disoluciones concentradas de azúcares que posteriormente se utilizan para elaborar medios de cultivo. Una de ellas se obtiene disolviendo 34,2 g de sacarosa en 180 g de agua. Para analizar su comportamiento, considere que la disolución es ideal, que la sacarosa es un soluto no volátil y que no se disocia ni reacciona con el agua. La temperatura se mantiene en 25 °C.",
+        datos: [
+          "Presión de vapor del agua pura a 25 °C: 3,170 kPa.",
+          "Masa molar del agua: 18,0 g/mol.",
+          "Masa molar de la sacarosa: 342 g/mol.",
+          "Masa molar de la glucosa: 180 g/mol.",
+          "Ley de Raoult: P = X_agua × P°_agua."
+        ],
+        preguntas: [
+          "¿Cuál es la fracción molar del agua en la disolución preparada? Muestre cómo obtiene las cantidades de sustancia necesarias para calcularla.",
+          "¿Cuál es la presión de vapor de la disolución a 25 °C y cuánto disminuye respecto de la del agua pura? Explique por qué se produce esta disminución.",
+          "Otro equipo propone sustituir los 34,2 g de sacarosa por 34,2 g de glucosa, manteniendo la misma masa de agua y temperatura. Afirma que la presión de vapor será igual porque la masa de azúcar no cambia. ¿Es correcta esta afirmación? Fundamente mediante el cálculo de la presión de vapor de la nueva disolución. Considere que la glucosa tampoco es volátil, se disocia ni reacciona, y que la nueva disolución es ideal."
+        ],
+        producto: "Resolución de la fracción molar y comparación de las presiones de vapor."
+      },
+      {
+        numero: 6,
+        titulo: "Elevación del punto de ebullición de una disolución salina",
+        area: "Recursos naturales",
+        bloque: "Propiedades coligativas",
+        contenidos: ["Molalidad", "Elevación ebulloscópica", "Factor de van ’t Hoff"],
+        contexto: "En un laboratorio de recursos naturales se estudia cómo cambia la temperatura de ebullición del agua al aumentar su salinidad. Para representar de forma simplificada un agua salina, se disuelven 11,7 g de cloruro de sodio (NaCl) en 500 g de agua. El ensayo se realiza a una presión constante a la cual el agua pura hierve a 100,00 °C. Considere que el NaCl es un soluto no volátil, se disocia completamente y la disolución presenta comportamiento ideal. Desprecie la pérdida de agua antes de alcanzar la ebullición.",
+        datos: [
+          "Masa molar del NaCl: 58,5 g/mol.",
+          "Constante ebulloscópica del agua: Kb = 0,512 °C·kg/mol.",
+          "Factor de van ’t Hoff del NaCl: i = 2.",
+          "Elevación ebulloscópica: ΔTb = i × Kb × m."
+        ],
+        preguntas: [
+          "¿Cuál es la molalidad de la disolución preparada? Explique por qué debe utilizarse la masa del agua y no la masa total de la disolución.",
+          "¿A qué temperatura comenzará a hervir la disolución según el modelo indicado? Un estudiante afirma que la sal facilita la ebullición porque disminuye la temperatura necesaria para hervir. Evalúe esta afirmación a partir de su resultado.",
+          "Durante el calentamiento se evapora agua hasta que quedan 250 g de agua en el recipiente, sin pérdida ni precipitación de NaCl. ¿Cuál será la nueva temperatura de ebullición y por qué cambia respecto de la inicial? Mantenga los supuestos de disociación completa y comportamiento ideal."
+        ],
+        producto: "Cálculo de molalidad y temperaturas de ebullición inicial y tras evaporación."
+      },
+      {
+        numero: 7,
+        titulo: "Descenso del punto de congelación en aguas salinas",
+        area: "Recursos naturales",
+        bloque: "Propiedades coligativas",
+        contenidos: ["Molalidad", "Descenso crioscópico", "Factor de van ’t Hoff"],
+        contexto: "En un proyecto de restauración de un humedal de altura se estudia el efecto de la salinidad sobre el inicio de la congelación del agua. Para un ensayo de laboratorio, se preparan dos muestras: una con agua pura y otra disolviendo 5,85 g de cloruro de sodio (NaCl) en 500 g de agua. Ambas muestras se enfrían lentamente hasta −0,50 °C. Considere condiciones de equilibrio, sin sobreenfriamiento, y suponga que el NaCl se disocia completamente y que la disolución se comporta idealmente.",
+        datos: [
+          "Temperatura de congelación del agua pura: 0,00 °C.",
+          "Masa molar del NaCl: 58,5 g/mol.",
+          "Constante crioscópica del agua: Kf = 1,86 °C·kg/mol.",
+          "Factor de van ’t Hoff del NaCl: i = 2.",
+          "Descenso crioscópico: ΔTf = i × Kf × m."
+        ],
+        preguntas: [
+          "¿A qué temperatura comenzará a congelarse la muestra salina? Muestre el cálculo de su molalidad y del descenso crioscópico.",
+          "Al alcanzar −0,50 °C, ¿en cuál de las dos muestras se espera la presencia de hielo? Justifique comparando la temperatura del ensayo con las temperaturas de congelación correspondientes.",
+          "Para otro ensayo se desea que una disolución de NaCl comience a congelarse a −1,50 °C. ¿Qué masa total de NaCl debe disolverse en 500 g de agua y qué masa adicional habría que incorporar a la muestra salina original para alcanzar esa condición? Mantenga los supuestos del modelo y considere que no hay pérdida de agua."
+        ],
+        producto: "Cálculo del descenso crioscópico y análisis comparativo de las dos muestras."
+      },
+      {
+        numero: 8,
+        titulo: "Presión osmótica y disponibilidad de agua para las plantas",
+        area: "Agronomía",
+        bloque: "Propiedades coligativas",
+        contenidos: ["Molaridad", "Presión osmótica", "Ósmosis"],
+        contexto: "En un laboratorio de fisiología vegetal se estudia cómo la concentración de solutos afecta el movimiento del agua. Para representar de forma simplificada este fenómeno, se utilizan dos compartimentos separados por una membrana que permite el paso de agua, pero no de sacarosa. El compartimento A contiene una disolución preparada con 17,1 g de sacarosa hasta completar 1,00 L de disolución. El compartimento B contiene una disolución de sacarosa de concentración 0,100 mol/L. Inicialmente, ambos compartimentos tienen la misma presión hidrostática y se encuentran a 25 °C. Considere disoluciones ideales y suponga que la sacarosa no se disocia ni reacciona. Este sistema representa únicamente el componente osmótico del movimiento del agua; no reproduce todos los factores presentes en una raíz real.",
+        datos: [
+          "Masa molar de la sacarosa: 342 g/mol.",
+          "R = 0,08206 L·atm·mol⁻¹·K⁻¹.",
+          "T = 298,15 K.",
+          "Factor de van ’t Hoff de la sacarosa: i = 1.",
+          "Presión osmótica: π = i × M × R × T."
+        ],
+        preguntas: [
+          "¿Cuál es la concentración molar de la disolución del compartimento A y cuál es su presión osmótica a 25 °C?",
+          "¿Hacia qué compartimento se producirá inicialmente el flujo neto de agua? Justifique calculando la presión osmótica del compartimento B y comparándola con la del compartimento A.",
+          "¿Qué diferencia de presión hidrostática debe imponerse inicialmente para impedir el flujo neto de agua entre ambos compartimentos y sobre cuál debe aplicarse la mayor presión? Considere las concentraciones iniciales, antes de que ocurra transferencia de agua."
+        ],
+        producto: "Cálculo de concentraciones y presiones osmóticas, con justificación de la dirección del flujo."
+      },
+      {
+        numero: 9,
+        titulo: "Equilibrio químico en la producción de amoníaco",
+        area: "Agronomía",
+        bloque: "Equilibrio químico",
+        contenidos: ["Kc", "Qc", "Dirección de reacción", "Equilibrio dinámico"],
+        contexto: "El amoníaco es una materia prima para fabricar fertilizantes nitrogenados. Su síntesis se representa mediante el equilibrio N₂(g) + 3 H₂(g) ⇌ 2 NH₃(g). En un reactor experimental mantenido a una temperatura constante, la constante de equilibrio para la ecuación escrita es Kc = 0,500. En cierto instante se determinan [N₂] = 0,200 mol/L, [H₂] = 0,400 mol/L y [NH₃] = 0,0400 mol/L. Considere comportamiento ideal y utilice las concentraciones molares en las expresiones de Kc y Qc. El reactor permanece cerrado y a volumen constante.",
+        preguntas: [
+          "Escriba la expresión de Kc para la reacción indicada. ¿Qué información aporta que Kc sea menor que 1 y por qué esto no significa que la reacción sea incapaz de producir amoníaco?",
+          "Calcule el cociente de reacción Qc para las concentraciones medidas. ¿Está el sistema en equilibrio? Si no lo está, indique en qué sentido evolucionará y cómo cambiará inicialmente la concentración de cada sustancia.",
+          "En una medición posterior, a la misma temperatura, se obtienen [N₂] = 0,180 mol/L, [H₂] = 0,340 mol/L y [NH₃] = 0,0800 mol/L. ¿Se alcanzó el equilibrio? Justifique mediante Qc y explique qué ocurre con las velocidades de las reacciones directa e inversa cuando finalmente se alcanza el equilibrio."
+        ],
+        producto: "Análisis de Kc y Qc, dirección de evolución y significado del equilibrio dinámico."
+      },
+      {
+        numero: 10,
+        titulo: "Optimización del equilibrio en la producción de fertilizantes",
+        area: "Agronomía",
+        bloque: "Equilibrio químico",
+        contenidos: ["Le Châtelier", "Presión y volumen", "Efecto de temperatura"],
+        contexto: "En una planta que produce amoníaco para fabricar fertilizantes nitrogenados, se analiza cómo modificar las condiciones de operación para favorecer su formación. La reacción es N₂(g) + 3 H₂(g) ⇌ 2 NH₃(g). La reacción directa es exotérmica: ΔH° < 0. El sistema se encuentra inicialmente en equilibrio. Se proponen distintas modificaciones que deben analizarse por separado, partiendo siempre del estado de equilibrio original. Considere comportamiento ideal de los gases.",
+        preguntas: [
+          "Se inyecta N₂ manteniendo constantes la temperatura y el volumen del reactor. ¿Hacia dónde se desplazará el equilibrio y cómo cambiará la cantidad de NH₃ mientras se establece el nuevo equilibrio? Justifique mediante el principio de Le Châtelier e indique si cambia Kc.",
+          "Se reduce el volumen del reactor a la mitad manteniendo constante la temperatura. ¿Cómo cambia Qc inmediatamente después de la compresión respecto de Kc y hacia dónde evolucionará el sistema? Relacione su respuesta con el número de moles gaseosos de cada lado de la ecuación.",
+          "Se aumenta la temperatura del reactor manteniendo constante su volumen. ¿En qué sentido se desplazará el equilibrio y cómo cambiará Kc? Un técnico afirma que, si la reacción ocurre más rápido al calentar, necesariamente habrá más amoníaco en el nuevo equilibrio. Evalúe esta afirmación."
+        ],
+        producto: "Análisis separado de cambios de concentración, volumen y temperatura sobre el equilibrio."
+      },
+      {
+        numero: 11,
+        titulo: "Equilibrio químico en la producción de cal agrícola",
+        area: "Agronomía",
+        bloque: "Equilibrio químico",
+        contenidos: ["Kp", "Sólidos en equilibrio", "Temperatura"],
+        contexto: "La cal viva (CaO) se obtiene mediante la descomposición térmica de la piedra caliza y puede utilizarse como materia prima para elaborar enmiendas destinadas a corregir la acidez de los suelos. En un reactor experimental se establece CaCO₃(s) ⇌ CaO(s) + CO₂(g). La reacción directa es endotérmica: ΔH° > 0. A la temperatura del ensayo, Kp = 0,400 cuando la presión de CO₂ se expresa numéricamente en bar respecto del estado estándar de 1 bar. Inicialmente están presentes ambos sólidos y la presión parcial de CO₂ es 0,400 bar. Considere sólidos puros, comportamiento ideal del gas y cantidades suficientes de ambos sólidos para que ninguno se agote durante los cambios descritos. Cada modificación se realiza por separado, partiendo del equilibrio inicial.",
+        preguntas: [
+          "Escriba la expresión de Kp. Si se agrega más CaCO₃ sólido manteniendo constantes la temperatura y el volumen disponible para el gas, ¿se desplazará el equilibrio? Explique por qué los sólidos no aparecen explícitamente en la expresión de la constante.",
+          "Se extrae parte del CO₂ y su presión parcial disminuye instantáneamente a 0,100 bar, sin cambiar la temperatura ni el volumen del reactor. Luego se cierra el sistema. ¿En qué sentido evolucionará la reacción y cuál será la presión parcial de CO₂ al restablecerse el equilibrio? Indique cómo cambiarán las cantidades de ambos sólidos durante el reajuste.",
+          "Se aumenta la temperatura manteniendo constante el volumen del reactor. ¿Cómo cambiará Kp y qué transformación de los sólidos se verá favorecida? Justifique mediante el principio de Le Châtelier y explique por qué no sería correcto utilizar Kp = 0,400 para calcular el nuevo equilibrio."
+        ],
+        producto: "Análisis de la expresión de Kp y del efecto de cambios de composición y temperatura."
+      },
+      {
+        numero: 12,
+        titulo: "Presión y equilibrio en una mezcla de gases",
+        area: "Recursos naturales",
+        bloque: "Equilibrio químico",
+        contenidos: ["Kc", "Qc", "Cambio de volumen", "Gas inerte"],
+        contexto: "En un laboratorio de monitoreo ambiental se estudia una mezcla de dióxido de nitrógeno (NO₂), un contaminante atmosférico, y tetróxido de dinitrógeno (N₂O₄). Para comprender su comportamiento, se utiliza un recipiente cerrado de volumen ajustable en el que ocurre N₂O₄(g) ⇌ 2 NO₂(g). A la temperatura del ensayo, Kc = 0,00500. Inicialmente [N₂O₄] = 0,0800 mol/L y [NO₂] = 0,0200 mol/L. La mezcla corresponde a un sistema experimental concentrado, no a las concentraciones habituales del aire ambiental. Considere comportamiento ideal de los gases y temperatura constante durante todas las modificaciones. Utilice las concentraciones molares en las expresiones de Kc y Qc.",
+        preguntas: [
+          "¿Se encuentra inicialmente la mezcla en equilibrio? Escriba la expresión de Qc, calcule su valor y compárelo con Kc.",
+          "Se duplica el volumen del recipiente sin agregar ni retirar sustancias. ¿Cuáles son las concentraciones inmediatamente después de la expansión, antes de que avance la reacción, y hacia dónde evolucionará el sistema? Justifique comparando el nuevo Qc con Kc.",
+          "En un ensayo independiente, partiendo de la mezcla inicial, se agrega argón, un gas inerte, manteniendo constantes la temperatura y el volumen. Un estudiante afirma que el aumento de presión desplazará el equilibrio hacia el N₂O₄, porque ese lado tiene menos moles gaseosos. ¿Es correcta su predicción? Explique qué ocurre con las concentraciones de los gases reactivos, con Qc y con el equilibrio."
+        ],
+        producto: "Cálculo de Qc y análisis de expansión y adición de gas inerte."
+      },
+      {
+        numero: 13,
+        titulo: "Acidez de una muestra de agua para un ensayo de germinación",
+        area: "Recursos naturales",
+        bloque: "Ácidos, bases y amortiguadores",
+        contenidos: ["Ácido fuerte", "pH", "pOH", "Dilución"],
+        contexto: "En un laboratorio de restauración ecológica se estudia el efecto de la acidez del agua sobre la germinación de semillas. Se prepara una disolución de ácido nítrico (HNO₃) de concentración 2,50 × 10⁻⁵ mol/L en agua desionizada. Para uno de los tratamientos experimentales, el protocolo exige utilizar una disolución con pH entre 5,5 y 6,5. Este intervalo es un criterio definido para el ensayo, no una norma general de calidad del agua. Considere que el HNO₃ es un ácido fuerte monoprótico y se disocia completamente. La temperatura es 25 °C. Desprecie el aporte de la autoionización del agua a la concentración de H₃O⁺ y la absorción de CO₂ atmosférico.",
+        datos: [
+          "Kw = 1,00 × 10⁻¹⁴.",
+          "pH = −log[H₃O⁺].",
+          "pOH = −log[OH⁻].",
+          "pH + pOH = 14,00."
+        ],
+        preguntas: [
+          "Escriba la reacción del HNO₃ con el agua y determine las concentraciones de H₃O⁺ y OH⁻ en la disolución preparada.",
+          "Calcule el pH y el pOH. ¿La disolución cumple el intervalo establecido para el tratamiento experimental? Justifique con los resultados.",
+          "Un equipo propone tomar 100 mL de la disolución y agregar agua desionizada hasta completar 1,00 L. ¿Cuál será el pH después de esta dilución y se cumplirá el intervalo solicitado? Explique por qué diluir diez veces la disolución no equivale a multiplicar su pH por diez."
+        ],
+        producto: "Resolución de concentraciones, pH/pOH y efecto de una dilución."
+      },
+      {
+        numero: 14,
+        titulo: "Evaluación de un agua alcalina en un ensayo de laboratorio",
+        area: "Recursos naturales",
+        bloque: "Ácidos, bases y amortiguadores",
+        contenidos: ["Base fuerte", "pH", "pOH", "Dilución"],
+        contexto: "En un laboratorio de recursos naturales se prepara una muestra de agua alcalina para estudiar su efecto sobre materiales utilizados en sistemas de riego. La muestra contiene hidróxido de calcio, Ca(OH)₂, completamente disuelto, a una concentración de 2,00 × 10⁻⁴ mol/L. El protocolo experimental establece que la muestra debe tener un pH entre 10,0 y 10,5. Este intervalo corresponde exclusivamente al ensayo y no constituye una recomendación para agua de riego. Considere que el Ca(OH)₂ disuelto se disocia completamente, que la temperatura es 25 °C y que no hay absorción de CO₂ ni precipitación. Desprecie el aporte de la autoionización del agua a la concentración de OH⁻.",
+        datos: [
+          "Kw = 1,00 × 10⁻¹⁴.",
+          "pOH = −log[OH⁻].",
+          "pH + pOH = 14,00."
+        ],
+        preguntas: [
+          "Escriba la ecuación de disociación del Ca(OH)₂ y determine las concentraciones de OH⁻ y H₃O⁺. Un estudiante considera que [OH⁻] es igual a 2,00 × 10⁻⁴ mol/L. ¿Es correcto?",
+          "Calcule el pOH y el pH de la muestra. ¿Cumple el intervalo establecido en el protocolo? Justifique su respuesta.",
+          "Se dispone de 250 mL de la muestra y se desea ajustar su pH a 10,20 utilizando únicamente agua desionizada. ¿Cuál debe ser el volumen final de la disolución y qué volumen de agua debe agregarse? Considere volúmenes aditivos."
+        ],
+        producto: "Cálculo de la disociación, pH/pOH y volumen requerido para diluir."
+      },
+      {
+        numero: 15,
+        titulo: "Acidez de una disolución de un ácido orgánico débil",
+        area: "Recursos naturales",
+        bloque: "Ácidos, bases y amortiguadores",
+        contenidos: ["Ácido débil", "Ka", "pH", "Aproximación de equilibrio"],
+        contexto: "En un laboratorio de recursos naturales se estudia el efecto de ácidos orgánicos sobre la germinación de semillas. Como sistema modelo, se prepara una disolución de ácido acético (CH₃COOH) de concentración 0,0100 mol/L en agua desionizada. Para uno de los tratamientos, el protocolo exige un pH entre 3,2 y 3,6. Este intervalo corresponde al diseño experimental y no constituye una recomendación general para la germinación. Considere una temperatura de 25 °C y comportamiento ideal. Desprecie la autoionización del agua y suponga que no hay otras sustancias que intervengan en el equilibrio ácido-base.",
+        datos: [
+          "Ka del ácido acético = 1,80 × 10⁻⁵.",
+          "Kw = 1,00 × 10⁻¹⁴.",
+          "pH + pOH = 14,00.",
+          "Puede utilizar la aproximación de disociación pequeña si la concentración disociada no supera el 5 % de la concentración inicial, pero debe comprobar su validez."
+        ],
+        preguntas: [
+          "Escriba la reacción del ácido acético con el agua y la expresión de Ka. Determine la concentración de H₃O⁺ en equilibrio y compruebe si es válida la aproximación de disociación pequeña.",
+          "Calcule el pH y el pOH de la disolución. ¿Cumple el intervalo establecido para el tratamiento? Un estudiante obtiene pH = 2,00 al igualar [H₃O⁺] con la concentración inicial del ácido. Explique su error.",
+          "Se prepara otra disolución de ácido acético con una concentración diez veces menor: 0,00100 mol/L. ¿Cuál será su pH y cuánto habrá aumentado respecto de la primera? Verifique si puede utilizar la misma aproximación antes de resolver."
+        ],
+        producto: "Análisis del equilibrio de un ácido débil y verificación de la aproximación."
+      },
+      {
+        numero: 16,
+        titulo: "Basicidad de una disolución de amoníaco",
+        area: "Agronomía",
+        bloque: "Ácidos, bases y amortiguadores",
+        contenidos: ["Base débil", "Kb", "pH", "Comparación con base fuerte"],
+        contexto: "En un laboratorio de ciencias del suelo se estudia el comportamiento ácido-base del amoníaco, una sustancia relacionada con las transformaciones del nitrógeno en sistemas agrícolas. Para un ensayo se prepara una disolución acuosa de NH₃ de concentración 0,0200 mol/L. El protocolo requiere que la disolución tenga un pH entre 10,5 y 11,0. Este intervalo corresponde exclusivamente al ensayo y no constituye una recomendación para su aplicación al suelo. Considere una temperatura de 25 °C, comportamiento ideal y ausencia de otras sustancias que intervengan en el equilibrio. Desprecie la autoionización del agua y las pérdidas de NH₃ por volatilización.",
+        datos: [
+          "Kb del NH₃ = 1,80 × 10⁻⁵.",
+          "Kw = 1,00 × 10⁻¹⁴.",
+          "pH + pOH = 14,00.",
+          "Puede utilizar la aproximación de ionización pequeña si la concentración de NH₃ que reacciona no supera el 5 % de su concentración inicial, pero debe comprobar su validez."
+        ],
+        preguntas: [
+          "Escriba la reacción del NH₃ con el agua y la expresión de Kb. Determine la concentración de OH⁻ en equilibrio y compruebe si es válida la aproximación de ionización pequeña.",
+          "Calcule el pOH y el pH de la disolución. ¿Cumple el intervalo establecido en el protocolo? Explique por qué el NH₃ produce una disolución básica aunque su fórmula no contenga grupos OH.",
+          "Otro equipo prepara una disolución de NaOH con la misma concentración inicial: 0,0200 mol/L. ¿Tendrá el mismo pH que la disolución de NH₃? Calcule el pH de la disolución de NaOH y compare las concentraciones de OH⁻ de ambas disoluciones. Considere que el NaOH se disocia completamente."
+        ],
+        producto: "Comparación del equilibrio de una base débil con la disociación de una base fuerte."
+      },
+      {
+        numero: 17,
+        titulo: "Preparación de una disolución amortiguadora para un ensayo con suelos",
+        area: "Agronomía",
+        bloque: "Ácidos, bases y amortiguadores",
+        contenidos: ["Amortiguadores", "Henderson–Hasselbalch", "Neutralización"],
+        contexto: "En un laboratorio de ciencias del suelo se necesita preparar 500 mL de una disolución amortiguadora de ácido acético y acetato de sodio, con pH = 4,80, para un ensayo de extracción. La concentración total del sistema amortiguador debe ser [CH₃COOH] + [CH₃COO⁻] = 0,100 mol/L. Se dispone de disoluciones de CH₃COOH y CH₃COONa, ambas de concentración 0,200 mol/L. El pH indicado corresponde al protocolo experimental y no a una recomendación de manejo del suelo. Considere una temperatura de 25 °C y comportamiento ideal. El acetato de sodio se disocia completamente. Para los cálculos, utilice la ecuación de Henderson–Hasselbalch y desprecie los pequeños cambios de composición debidos al establecimiento del equilibrio.",
+        datos: [
+          "pKa del ácido acético = 4,76.",
+          "pH = pKa + log([CH₃COO⁻] / [CH₃COOH])."
+        ],
+        preguntas: [
+          "Explique por qué la mezcla de ácido acético y acetato de sodio constituye un sistema amortiguador. ¿Qué relación entre las concentraciones de acetato y ácido acético se necesita para obtener pH = 4,80?",
+          "¿Qué volumen de cada disolución disponible debe medirse para preparar los 500 mL del amortiguador con el pH y la concentración total solicitados? Describa brevemente la preparación.",
+          "A los 500 mL del amortiguador preparado se agregan 5,00 mL de HCl de concentración 0,100 mol/L. ¿Qué componente del amortiguador consume el ácido añadido y cuál será el nuevo pH? Considere que el HCl se disocia completamente y reacciona estequiométricamente antes de restablecerse el equilibrio."
+        ],
+        producto: "Cálculo de la relación amortiguadora, volúmenes de preparación y respuesta a ácido añadido."
+      },
+      {
+        numero: 18,
+        titulo: "Respuesta y agotamiento de una disolución amortiguadora",
+        area: "Ámbito forestal",
+        bloque: "Ácidos, bases y amortiguadores",
+        contenidos: ["Amortiguadores", "Henderson–Hasselbalch", "Neutralización", "Capacidad amortiguadora"],
+        contexto: "En un laboratorio de fisiología vegetal se utiliza una disolución amortiguadora de ácido acético y acetato de sodio para estudiar procesos sensibles al pH. Cada muestra de 100 mL contiene inicialmente 0,00500 mol de CH₃COOH y 0,00500 mol de CH₃COO⁻. Durante el ensayo pueden incorporarse sustancias básicas. Para evaluar la respuesta del amortiguador, se realizan dos pruebas independientes con NaOH, utilizando una muestra nueva en cada prueba. Considere una temperatura de 25 °C, comportamiento ideal y disociación completa del NaOH. Suponga volúmenes aditivos y que la neutralización ocurre antes de restablecerse el equilibrio.",
+        datos: [
+          "pKa del ácido acético = 4,76.",
+          "Kw = 1,00 × 10⁻¹⁴.",
+          "pH + pOH = 14,00.",
+          "pH = pKa + log([CH₃COO⁻] / [CH₃COOH]).",
+          "Para aplicar esta ecuación, desprecie los pequeños cambios de composición debidos al equilibrio."
+        ],
+        preguntas: [
+          "¿Cuál es el pH inicial del amortiguador? Identifique qué componente reacciona con el OH⁻ añadido y escriba la ecuación de esa reacción.",
+          "A una primera muestra de 100 mL se agregan 10,0 mL de NaOH de concentración 0,100 mol/L. ¿Cuál será el nuevo pH y por qué la mezcla conserva su comportamiento amortiguador?",
+          "A otra muestra original de 100 mL se agregan 60,0 mL de NaOH de concentración 0,100 mol/L. ¿Puede seguir utilizándose la ecuación de Henderson–Hasselbalch? Determine el pH final a partir del OH⁻ que queda en exceso y explique qué ocurrió con la capacidad amortiguadora. Para este cálculo, desprecie el aporte adicional de OH⁻ por hidrólisis del acetato."
+        ],
+        producto: "Análisis cuantitativo de la respuesta del amortiguador y de su agotamiento ante una base."
+      }
+    ];
+
+    const listaRetos = document.getElementById("listaRetos");
+    const workspace = document.getElementById("workspace");
+    const contador = document.getElementById("contador");
+    const sinResultados = document.getElementById("sinResultados");
+    const buscar = document.getElementById("buscar");
+    const filtroArea = document.getElementById("filtroArea");
+    const filtroBloque = document.getElementById("filtroBloque");
+    const limpiarFiltros = document.getElementById("limpiarFiltros");
+
+    let retoActivo = null;
+
+    function escaparHTML(texto) {
+      return String(texto)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function textoReto(reto) {
+      return [
+        reto.numero, reto.titulo, reto.area, reto.bloque,
+        reto.contenidos.join(" "), reto.contexto,
+        (reto.datos || []).join(" "),
+        reto.preguntas.join(" "), reto.producto
+      ].join(" ").toLowerCase();
+    }
+
+    function obtenerFiltrados() {
+      const termino = buscar.value.trim().toLowerCase();
+      const area = filtroArea.value;
+      const bloque = filtroBloque.value;
+
+      return RETOS.filter(reto =>
+        (!termino || textoReto(reto).includes(termino)) &&
+        (!area || reto.area === area) &&
+        (!bloque || reto.bloque === bloque)
+      );
+    }
+
+    function renderizarLista() {
+      const filtrados = obtenerFiltrados();
+      listaRetos.innerHTML = "";
+      contador.textContent = `${filtrados.length} de ${RETOS.length} retos disponibles`;
+      sinResultados.style.display = filtrados.length === 0 ? "block" : "none";
+
+      filtrados.forEach(reto => {
+        const boton = document.createElement("button");
+        boton.type = "button";
+        boton.className = "reto-button";
+        boton.setAttribute("aria-pressed", retoActivo === reto.numero ? "true" : "false");
+        if (retoActivo === reto.numero) boton.classList.add("active");
+
+        boton.innerHTML = `
+          <strong>Reto ${reto.numero}. ${escaparHTML(reto.titulo)}</strong>
+          <small>${escaparHTML(reto.area)} · ${escaparHTML(reto.bloque)}</small>
+        `;
+
+        boton.addEventListener("click", () => seleccionarReto(reto.numero));
+        listaRetos.appendChild(boton);
+      });
+    }
+
+    function renderizarDatos(reto) {
+      if (!reto.datos || reto.datos.length === 0) return "";
+      return `
+        <section class="section">
+          <h3>Datos y relaciones disponibles</h3>
+          <div class="data-box">
+            <ul>${reto.datos.map(d => `<li>${escaparHTML(d)}</li>`).join("")}</ul>
+          </div>
+        </section>`;
+    }
+
+    function seleccionarReto(numero) {
+      const reto = RETOS.find(item => item.numero === numero);
+      if (!reto) return;
+
+      retoActivo = numero;
+      renderizarLista();
+
+      workspace.innerHTML = `
+        <h2>Reto ${reto.numero}. ${escaparHTML(reto.titulo)}</h2>
+        <p class="subtitle">Lea el contexto y responda las preguntas considerando los supuestos y datos indicados.</p>
+
+        <div class="tags">
+          <span class="tag blue">${escaparHTML(reto.area)}</span>
+          <span class="tag purple">${escaparHTML(reto.bloque)}</span>
+          ${reto.contenidos.map(c => `<span class="tag green">${escaparHTML(c)}</span>`).join("")}
+        </div>
+
+        <section class="section">
+          <h3>1. Contexto</h3>
+          <p>${escaparHTML(reto.contexto)}</p>
+        </section>
+
+        ${renderizarDatos(reto)}
+
+        <section class="section">
+          <h3>${reto.datos && reto.datos.length ? "3" : "2"}. Preguntas guía</h3>
+          <ol class="questions">
+            ${reto.preguntas.map(p => `<li>${escaparHTML(p)}</li>`).join("")}
+          </ol>
+        </section>
+
+        <section class="section">
+          <h3>${reto.datos && reto.datos.length ? "4" : "3"}. Producto esperado</h3>
+          <div class="product-box">
+            <p>${escaparHTML(reto.producto)}</p>
+            <p>La forma de entrega y los criterios de evaluación deben confirmarse con el docente.</p>
+          </div>
+        </section>
+      `;
+
+      workspace.focus?.();
+    }
+
+    function limpiarTodosLosFiltros() {
+      buscar.value = "";
+      filtroArea.value = "";
+      filtroBloque.value = "";
+      renderizarLista();
+    }
+
+    buscar.addEventListener("input", renderizarLista);
+    filtroArea.addEventListener("change", renderizarLista);
+    filtroBloque.addEventListener("change", renderizarLista);
+    limpiarFiltros.addEventListener("click", limpiarTodosLosFiltros);
+
+    if (RETOS.length !== 18) {
+      console.error(`Se esperaban 18 retos y se encontraron ${RETOS.length}.`);
+    }
+
+    renderizarLista();
+  </script>
+</body>
+</html>
