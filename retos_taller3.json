@@ -1,0 +1,364 @@
+{
+  "taller": "Taller Colaborativo N.° 3",
+  "curso": "QIM201G — Química General",
+  "fecha": "viernes 20 de noviembre de 2026",
+  "tema": "Aminoácidos y péptidos",
+  "retos": [
+    {
+      "numero": 1,
+      "cultivo": "Maíz",
+      "aminoacido": "Lisina",
+      "abreviatura": "Lys",
+      "titulo": "Maíz · Lisina en el grano",
+      "contexto": "El grano de maíz contiene lisina. En este reto se examina su estructura, su comportamiento ácido-base y su incorporación a un dipéptido.",
+      "R": "–(CH₂)₄–NH₂",
+      "clasificacionCadenaLateral": "básica",
+      "aminoacidoEsencialEnAdulto": true,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.18},
+        {"grupo": "amonio α", "valor": 8.95},
+        {"grupo": "amonio de la cadena lateral", "valor": 10.53}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["7,0", "12,0"],
+      "dipéptido": {
+        "inicial": ["Lys", "Ala"],
+        "invertido": ["Ala", "Lys"],
+        "R": {"Lys": "–(CH₂)₄–NH₂", "Ala": "–CH₃"}
+      }
+    },
+    {
+      "numero": 2,
+      "cultivo": "Trigo",
+      "aminoacido": "Metionina",
+      "abreviatura": "Met",
+      "titulo": "Trigo · Metionina en el grano",
+      "contexto": "La metionina es uno de los aminoácidos presentes en el grano de trigo. Su cadena lateral contiene azufre.",
+      "R": "–CH₂–CH₂–S–CH₃",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": true,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.28},
+        {"grupo": "amonio α", "valor": 9.21}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["6,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Met", "Gly"],
+        "invertido": ["Gly", "Met"],
+        "R": {"Met": "–CH₂–CH₂–S–CH₃", "Gly": "–H"}
+      }
+    },
+    {
+      "numero": 3,
+      "cultivo": "Soya",
+      "aminoacido": "Ácido glutámico",
+      "abreviatura": "Glu",
+      "titulo": "Soya · Ácido glutámico",
+      "contexto": "Al hidrolizar proteínas de la soya se liberan aminoácidos. En este reto se estudia el ácido glutámico libre.",
+      "R": "–CH₂–CH₂–COOH",
+      "clasificacionCadenaLateral": "ácida",
+      "aminoacidoEsencialEnAdulto": false,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.19},
+        {"grupo": "carboxilo de la cadena lateral", "valor": 4.25},
+        {"grupo": "amonio α", "valor": 9.67}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["3,0", "7,0"],
+      "dipéptido": {
+        "inicial": ["Glu", "Ser"],
+        "invertido": ["Ser", "Glu"],
+        "R": {"Glu": "–CH₂–CH₂–COOH", "Ser": "–CH₂–OH"}
+      }
+    },
+    {
+      "numero": 4,
+      "cultivo": "Lenteja",
+      "aminoacido": "Treonina",
+      "abreviatura": "Thr",
+      "titulo": "Lenteja · Treonina en la semilla",
+      "contexto": "La treonina forma parte de las proteínas de la semilla de lenteja. Su cadena lateral contiene un grupo hidroxilo.",
+      "R": "–CH(OH)–CH₃",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": true,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.09},
+        {"grupo": "amonio α", "valor": 9.10}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["5,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Thr", "Val"],
+        "invertido": ["Val", "Thr"],
+        "R": {"Thr": "–CH(OH)–CH₃", "Val": "–CH(CH₃)₂"}
+      }
+    },
+    {
+      "numero": 5,
+      "cultivo": "Arveja",
+      "aminoacido": "Ácido aspártico",
+      "abreviatura": "Asp",
+      "titulo": "Arveja · Ácido aspártico",
+      "contexto": "En la arveja, parte del nitrógeno orgánico soluble se encuentra en aminoácidos libres. El ácido aspártico permite estudiar cómo cambia la carga de un aminoácido con dos grupos carboxilo.",
+      "R": "–CH₂–COOH",
+      "clasificacionCadenaLateral": "ácida",
+      "aminoacidoEsencialEnAdulto": false,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 1.88},
+        {"grupo": "carboxilo de la cadena lateral", "valor": 3.65},
+        {"grupo": "amonio α", "valor": 9.60}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["2,7", "7,0"],
+      "dipéptido": {
+        "inicial": ["Asp", "Ala"],
+        "invertido": ["Ala", "Asp"],
+        "R": {"Asp": "–CH₂–COOH", "Ala": "–CH₃"}
+      }
+    },
+    {
+      "numero": 6,
+      "cultivo": "Quinoa",
+      "aminoacido": "Fenilalanina",
+      "abreviatura": "Phe",
+      "titulo": "Quinoa · Fenilalanina en la semilla",
+      "contexto": "La fenilalanina forma parte de las proteínas de la semilla de quinoa. Su cadena lateral contiene un anillo aromático.",
+      "R": "–CH₂–C₆H₅",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": true,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 1.83},
+        {"grupo": "amonio α", "valor": 9.13}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["5,5", "11,0"],
+      "dipéptido": {
+        "inicial": ["Phe", "Gly"],
+        "invertido": ["Gly", "Phe"],
+        "R": {"Phe": "–CH₂–C₆H₅", "Gly": "–H"}
+      }
+    },
+    {
+      "numero": 7,
+      "cultivo": "Avena",
+      "aminoacido": "Alanina",
+      "abreviatura": "Ala",
+      "titulo": "Avena · Alanina",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de avena. Use la alanina libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "–CH₃",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": false,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.34},
+        {"grupo": "amonio α", "valor": 9.69}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Ala", "Ser"],
+        "invertido": ["Ser", "Ala"],
+        "R": {"Ala": "–CH₃", "Ser": "–CH₂–OH"}
+      }
+    },
+    {
+      "numero": 8,
+      "cultivo": "Espárrago",
+      "aminoacido": "Asparagina",
+      "abreviatura": "Asn",
+      "titulo": "Espárrago · Asparagina",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de espárrago. Use la asparagina libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "CH₂–C(=O)–NH₂",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": false,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.02},
+        {"grupo": "amonio α", "valor": 8.80}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Asn", "Val"],
+        "invertido": ["Val", "Asn"],
+        "R": {"Asn": "CH₂–C(=O)–NH₂", "Val": "–CH(CH₃)₂"}
+      }
+    },
+    {
+      "numero": 9,
+      "cultivo": "Girasol",
+      "aminoacido": "Glutamina",
+      "abreviatura": "Gln",
+      "titulo": "Girasol · Glutamina",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de girasol. Use la glutamina libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "CH₂–CH₂–C(=O)–NH₂",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": false,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.17},
+        {"grupo": "amonio α", "valor": 9.13}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Gln", "Ala"],
+        "invertido": ["Ala", "Gln"],
+        "R": {"Gln": "CH₂–CH₂–C(=O)–NH₂", "Ala": "–CH₃"}
+      }
+    },
+    {
+      "numero": 10,
+      "cultivo": "Garbanzo",
+      "aminoacido": "Glicina",
+      "abreviatura": "Gly",
+      "titulo": "Garbanzo · Glicina",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de garbanzo. Use la glicina libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "H",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": false,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.34},
+        {"grupo": "amonio α", "valor": 9.60}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Gly", "Thr"],
+        "invertido": ["Thr", "Gly"],
+        "R": {"Gly": "H", "Thr": "–CH(OH)–CH₃"}
+      }
+    },
+    {
+      "numero": 11,
+      "cultivo": "Cebada",
+      "aminoacido": "Isoleucina",
+      "abreviatura": "Ile",
+      "titulo": "Cebada · Isoleucina",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de cebada. Use la isoleucina libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "CH(CH₃)–CH₂–CH₃",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": true,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.36},
+        {"grupo": "amonio α", "valor": 9.60}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Ile", "Ser"],
+        "invertido": ["Ser", "Ile"],
+        "R": {"Ile": "CH(CH₃)–CH₂–CH₃", "Ser": "–CH₂–OH"}
+      }
+    },
+    {
+      "numero": 12,
+      "cultivo": "Sorgo",
+      "aminoacido": "Leucina",
+      "abreviatura": "Leu",
+      "titulo": "Sorgo · Leucina",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de sorgo. Use la leucina libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "CH₂–CH(CH₃)₂",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": true,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.36},
+        {"grupo": "amonio α", "valor": 9.60}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Leu", "Gly"],
+        "invertido": ["Gly", "Leu"],
+        "R": {"Leu": "CH₂–CH(CH₃)₂", "Gly": "H"}
+      }
+    },
+    {
+      "numero": 13,
+      "cultivo": "Lino",
+      "aminoacido": "Serina",
+      "abreviatura": "Ser",
+      "titulo": "Lino · Serina",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de lino. Use la serina libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "CH₂–OH",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": false,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.21},
+        {"grupo": "amonio α", "valor": 9.15}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Ser", "Phe"],
+        "invertido": ["Phe", "Ser"],
+        "R": {"Ser": "CH₂–OH", "Phe": "CH₂–C₆H₅"}
+      }
+    },
+    {
+      "numero": 14,
+      "cultivo": "Amaranto",
+      "aminoacido": "Triptófano",
+      "abreviatura": "Trp",
+      "titulo": "Amaranto · Triptófano",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de amaranto. Use el triptófano libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "CH₂–(1H-indol-3-il)",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": true,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.83},
+        {"grupo": "amonio α", "valor": 9.39}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Trp", "Ala"],
+        "invertido": ["Ala", "Trp"],
+        "R": {"Trp": "CH₂–(1H-indol-3-il)", "Ala": "–CH₃"}
+      }
+    },
+    {
+      "numero": 15,
+      "cultivo": "Mijo",
+      "aminoacido": "Valina",
+      "abreviatura": "Val",
+      "titulo": "Mijo · Valina",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de mijo. Use la valina libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "CH(CH₃)₂",
+      "clasificacionCadenaLateral": "neutra",
+      "aminoacidoEsencialEnAdulto": true,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 2.32},
+        {"grupo": "amonio α", "valor": 9.62}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "11,0"],
+      "dipéptido": {
+        "inicial": ["Val", "Gln"],
+        "invertido": ["Gln", "Val"],
+        "R": {"Val": "CH(CH₃)₂", "Gln": "CH₂–CH₂–C(=O)–NH₂"}
+      }
+    },
+    {
+      "numero": 16,
+      "cultivo": "Raps",
+      "aminoacido": "Cisteína",
+      "abreviatura": "Cys",
+      "titulo": "Raps · Cisteína",
+      "contexto": "Se estudian los aminoácidos que componen las proteínas de raps. Use la cisteína libre para analizar el equilibrio ácido-base y como punto de partida para representar dos dipéptidos modelo.",
+      "R": "CH₂–SH",
+      "clasificacionCadenaLateral": "polar; el tiol puede desprotonarse",
+      "aminoacidoEsencialEnAdulto": false,
+      "pKas": [
+        {"grupo": "carboxilo α", "valor": 1.96},
+        {"grupo": "tiol de la cadena lateral", "valor": 8.18},
+        {"grupo": "amonio α", "valor": 10.28}
+      ],
+      "pKw": 14.00,
+      "pHConsulta": ["1,0", "9,2"],
+      "dipéptido": {
+        "inicial": ["Cys", "Gly"],
+        "invertido": ["Gly", "Cys"],
+        "R": {"Cys": "CH₂–SH", "Gly": "H"}
+      }
+    }
+  ]
+}

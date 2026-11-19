@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="essay">
+    <name><text><![CDATA[Nube_palabras_aminoacidos]]></text></name>
+    <questiontext format="html"><text><![CDATA[¿Qué palabra o idea te viene a la mente al escuchar “aminoácido”?]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[Pregunta de exploración inicial. En Wooclap, cambia el tipo de visualización a “Nube de palabras” si el formato no se conserva al importar.]]></text></generalfeedback>
+    <defaultgrade>0.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <answer fraction="0" format="html"><text><![CDATA[]]></text><feedback format="html"><text><![CDATA[Gracias por compartir tu idea.]]></text></feedback></answer>
+    <responseformat>editor</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>3</responsefieldlines>
+    <attachments>0</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+  </question>
+
+  <question type="essay">
+    <name><text><![CDATA[Observacion_estructuras]]></text></name>
+    <questiontext format="html"><text><![CDATA[Al comparar las estructuras del memorice, ¿qué observaste que se mantiene y qué cambia entre los aminoácidos?]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[La pregunta busca que describas lo observado. Como idea inicial, los aminoácidos comparten una organización general y presentan diferencias en sus cadenas laterales.]]></text></generalfeedback>
+    <defaultgrade>0.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <answer fraction="0" format="html"><text><![CDATA[]]></text><feedback format="html"><text><![CDATA[Gracias. Retomaremos estas observaciones durante la unidad.]]></text></feedback></answer>
+    <responseformat>editor</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>5</responsefieldlines>
+    <attachments>0</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+  </question>
+
+  <question type="multichoice">
+    <name><text><![CDATA[Estrategia_memorice]]></text></name>
+    <questiontext format="html"><text><![CDATA[¿Qué te ayudó más a encontrar las parejas durante el memorice? Elige la opción que mejor represente tu experiencia.]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[Pregunta de opinión sin respuesta correcta. En Wooclap, configúrala como encuesta si esa opción no se conserva al importar.]]></text></generalfeedback>
+    <defaultgrade>0.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>0</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0" format="html"><text><![CDATA[Observar y comparar las estructuras.]]></text><feedback format="html"><text><![CDATA[Gracias por responder.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[Recordar los nombres de los aminoácidos.]]></text><feedback format="html"><text><![CDATA[Gracias por responder.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[Usar los colores de las categorías.]]></text><feedback format="html"><text><![CDATA[Gracias por responder.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[Probar distintas cartas y aprender de los intentos.]]></text><feedback format="html"><text><![CDATA[Gracias por responder.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[Otra estrategia.]]></text><feedback format="html"><text><![CDATA[Gracias por responder.]]></text></feedback></answer>
+  </question>
+
+  <question type="multichoice">
+    <name><text><![CDATA[Confianza_despues_del_juego]]></text></name>
+    <questiontext format="html"><text><![CDATA[Después de jugar, ¿qué tan seguro o segura te sientes al distinguir las estructuras de los aminoácidos?]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[Pregunta de autoevaluación; no hay una respuesta correcta. En Wooclap, puedes cambiarla a escala de confianza o escala de valoración si ese tipo no se conserva al importar.]]></text></generalfeedback>
+    <defaultgrade>0.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>0</shuffleanswers>
+    <answernumbering>123</answernumbering>
+    <answer fraction="0" format="html"><text><![CDATA[1 — Nada seguro/a]]></text><feedback format="html"><text><![CDATA[Gracias por indicar cómo te sientes.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[2 — Poco seguro/a]]></text><feedback format="html"><text><![CDATA[Gracias por indicar cómo te sientes.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[3 — Medianamente seguro/a]]></text><feedback format="html"><text><![CDATA[Gracias por indicar cómo te sientes.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[4 — Bastante seguro/a]]></text><feedback format="html"><text><![CDATA[Gracias por indicar cómo te sientes.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[5 — Muy seguro/a]]></text><feedback format="html"><text><![CDATA[Gracias por indicar cómo te sientes.]]></text></feedback></answer>
+  </question>
+
+  <question type="multichoice">
+    <name><text><![CDATA[Significado_aminoacido_esencial]]></text></name>
+    <questiontext format="html"><text><![CDATA[¿Qué significa que un aminoácido sea esencial?]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[Un aminoácido esencial debe obtenerse de la dieta porque el organismo no puede sintetizarlo en cantidad suficiente para cubrir sus necesidades. “Esencial” no significa que sea más importante que los demás.]]></text></generalfeedback>
+    <defaultgrade>0.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html"><text><![CDATA[El organismo no puede sintetizarlo en cantidad suficiente y debe obtenerse de la dieta.]]></text><feedback format="html"><text><![CDATA[Correcto. Esa es la idea nutricional de “esencial”.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[Es más importante que los otros aminoácidos.]]></text><feedback format="html"><text><![CDATA[No. “Esencial” se refiere a la necesidad de obtenerlo de la dieta.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[Solo se encuentra en alimentos de origen animal.]]></text><feedback format="html"><text><![CDATA[No. Los aminoácidos esenciales pueden aportarse mediante alimentos de origen animal y vegetal.]]></text></feedback></answer>
+    <answer fraction="0" format="html"><text><![CDATA[No forma parte de las proteínas.]]></text><feedback format="html"><text><![CDATA[No. Los aminoácidos son componentes de las proteínas.]]></text></feedback></answer>
+    <correctfeedback format="html"><text><![CDATA[Correcto: un aminoácido esencial debe aportarse mediante la alimentación.]]></text></correctfeedback>
+    <partiallycorrectfeedback format="html"><text><![CDATA[Revisa el significado nutricional de “esencial”.]]></text></partiallycorrectfeedback>
+    <incorrectfeedback format="html"><text><![CDATA[Recuerda: “esencial” indica que debe obtenerse de la dieta, no que sea más importante.]]></text></incorrectfeedback>
+  </question>
+
+  <question type="essay">
+    <name><text><![CDATA[Pregunta_para_la_unidad]]></text></name>
+    <questiontext format="html"><text><![CDATA[¿Qué pregunta te quedó o qué te gustaría entender sobre aminoácidos durante la unidad?]]></text></questiontext>
+    <generalfeedback format="html"><text><![CDATA[Pregunta abierta para recoger inquietudes y retomarlas durante el curso. No se califica automáticamente.]]></text></generalfeedback>
+    <defaultgrade>0.0000000</defaultgrade>
+    <penalty>0.0000000</penalty>
+    <hidden>0</hidden>
+    <answer fraction="0" format="html"><text><![CDATA[]]></text><feedback format="html"><text><![CDATA[Gracias por compartir tu pregunta.]]></text></feedback></answer>
+    <responseformat>editor</responseformat>
+    <responserequired>0</responserequired>
+    <responsefieldlines>5</responsefieldlines>
+    <attachments>0</attachments>
+    <attachmentsrequired>0</attachmentsrequired>
+  </question>
+</quiz>

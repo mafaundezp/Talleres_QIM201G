@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Taller Colaborativo 3 de Química QIM201G: retos sobre aminoácidos y péptidos."
+    />
+    <title>Taller Colaborativo 3 — QIM201G</title>
+    <style>
+      :root {
+        --azul: #123b5d;
+        --azul-medio: #2d6a8a;
+        --azul-claro: #eaf3f8;
+        --morado: #6d28d9;
+        --morado-claro: #f5f3ff;
+        --verde: #166534;
+        --verde-claro: #f0fdf4;
+        --ambar: #fff7df;
+        --texto: #34495e;
+        --gris: #64748b;
+        --borde: #cbd5e1;
+        --fondo: #f8fafc;
+        --blanco: #fff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--fondo);
+        color: var(--texto);
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.55;
+      }
+      header {
+        padding: 28px 5vw;
+        background: linear-gradient(135deg, var(--azul), var(--azul-medio));
+        color: #fff;
+      }
+      header h1 {
+        margin: 0 0 8px;
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        line-height: 1.2;
+      }
+      header p {
+        margin: 5px 0;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        padding: 12px 5vw;
+        background: #fff;
+        border-bottom: 1px solid var(--borde);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+      }
+      .toolbar label {
+        font-weight: bold;
+        color: var(--azul);
+      }
+      .toolbar input,
+      .toolbar select,
+      .toolbar button,
+      .toolbar .nav-button {
+        min-height: 42px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        font: inherit;
+      }
+      .toolbar input,
+      .toolbar select {
+        border: 1px solid var(--borde);
+        background: #fff;
+        color: var(--texto);
+      }
+      .toolbar input {
+        min-width: 220px;
+        flex: 1 1 220px;
+      }
+      .toolbar select {
+        min-width: 200px;
+        flex: 0 1 240px;
+      }
+      .toolbar button {
+        border: 0;
+        background: var(--morado);
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .toolbar button:hover {
+        filter: brightness(1.1);
+      }
+      .toolbar .nav-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px;
+        background: var(--azul);
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .toolbar .nav-button:hover {
+        background: var(--azul-medio);
+      }
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      .nav-button:focus-visible {
+        outline: 3px solid #f59e0b;
+        outline-offset: 2px;
+      }
+      .container {
+        width: min(1400px, 92%);
+        margin: 0 auto;
+        padding: 24px 0 50px;
+      }
+      .notice,
+      .panel,
+      .workspace {
+        border: 1px solid var(--borde);
+        border-radius: 9px;
+        background: #fff;
+        box-shadow: 0 2px 7px rgba(0, 0, 0, 0.06);
+      }
+      .notice {
+        margin-bottom: 20px;
+        padding: 18px 20px;
+        border-left: 5px solid var(--azul);
+        background: var(--azul-claro);
+      }
+      .notice h2,
+      .panel h2,
+      .workspace h2 {
+        margin-top: 0;
+        color: var(--azul);
+      }
+      .notice h2 {
+        font-size: 1.25rem;
+      }
+      .notice p {
+        margin: 8px 0;
+      }
+      .notice h3 {
+        color: var(--azul);
+        margin-bottom: 6px;
+      }
+      .notice ul,
+      .notice ol {
+        padding-left: 24px;
+      }
+      .notice li {
+        margin-bottom: 5px;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.8fr);
+        gap: 20px;
+        align-items: start;
+      }
+      .panel {
+        position: sticky;
+        top: 12px;
+        max-height: calc(100vh - 24px);
+        overflow-y: auto;
+        padding: 17px;
+      }
+      .panel-summary {
+        color: var(--gris);
+        font-size: 0.93rem;
+      }
+      .reto-list {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .reto-button {
+        width: 100%;
+        padding: 11px 12px;
+        border: 1px solid var(--borde);
+        border-radius: 7px;
+        background: #f8fafc;
+        color: var(--texto);
+        text-align: left;
+        cursor: pointer;
+        font: inherit;
+      }
+      .reto-button:hover,
+      .reto-button.active {
+        border-color: var(--azul-medio);
+        background: var(--azul-claro);
+      }
+      .reto-button strong {
+        display: block;
+        color: var(--azul);
+        line-height: 1.3;
+      }
+      .reto-button small {
+        display: block;
+        margin-top: 4px;
+        color: var(--gris);
+      }
+      .workspace {
+        min-width: 0;
+        padding: 24px;
+      }
+      .workspace h2 {
+        margin-bottom: 6px;
+        font-size: 1.55rem;
+        line-height: 1.25;
+      }
+      .subtitle {
+        margin-top: 0;
+        color: var(--gris);
+      }
+      .tags {
+        margin: 12px 0 17px;
+      }
+      .tag {
+        display: inline-block;
+        margin: 3px 5px 3px 0;
+        padding: 4px 10px;
+        border-radius: 18px;
+        background: var(--azul-claro);
+        color: var(--azul);
+        font-size: 0.85rem;
+      }
+      .tag.purple {
+        background: var(--morado-claro);
+        color: #6b21a8;
+      }
+      .section {
+        margin: 23px 0;
+      }
+      .section h3 {
+        margin: 0 0 9px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #e2e8f0;
+        color: var(--azul);
+        font-size: 1.1rem;
+      }
+      .data-box,
+      .product-box,
+      .rubric-box {
+        padding: 14px 16px;
+        border-radius: 7px;
+      }
+      .data-box {
+        border-left: 4px solid var(--verde);
+        background: var(--verde-claro);
+      }
+      .product-box {
+        border-left: 4px solid var(--morado);
+        background: var(--morado-claro);
+      }
+      .rubric-box {
+        border-left: 4px solid #d97706;
+        background: var(--ambar);
+      }
+      .data-box ul {
+        margin: 0;
+        padding-left: 22px;
+      }
+      .questions {
+        padding-left: 24px;
+      }
+      .questions > li {
+        margin-bottom: 16px;
+      }
+      .questions ul {
+        padding-left: 22px;
+        margin-top: 7px;
+      }
+      .questions ul li {
+        margin-bottom: 8px;
+      }
+      .initial {
+        padding: 22px 12px;
+        color: var(--gris);
+        text-align: center;
+      }
+      .empty {
+        padding: 20px;
+        border: 1px dashed var(--borde);
+        border-radius: 7px;
+        color: var(--gris);
+        text-align: center;
+      }
+      .error {
+        padding: 16px;
+        border-left: 5px solid #b91c1c;
+        border-radius: 6px;
+        background: #fef2f2;
+        color: var(--texto);
+      }
+      .footer-note {
+        margin-top: 22px;
+        color: var(--gris);
+        font-size: 0.9rem;
+      }
+      @media (max-width: 950px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .panel {
+          position: static;
+          max-height: none;
+        }
+      }
+      @media (max-width: 650px) {
+        .container {
+          width: 94%;
+        }
+        .toolbar input,
+        .toolbar select,
+        .toolbar button,
+        .toolbar .nav-button {
+          width: 100%;
+          min-width: 0;
+          flex: 1 1 100%;
+        }
+        .workspace {
+          padding: 17px;
+        }
+        .workspace h2 {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Encabezado del taller -->
+    <header>
+      <h1>Taller Colaborativo N.° 3 de Química</h1>
+      <p><strong>QIM201G — Química General</strong></p>
+      <p>Viernes 20 de noviembre de 2026 · Aminoácidos y péptidos</p>
+    </header>
+    <!-- Búsqueda, filtro de cultivo y accesos a las otras actividades -->
+    <div
+      class="toolbar"
+      role="search"
+      aria-label="Buscar, filtrar y navegar por las actividades"
+    >
+      <label for="buscar">Buscar:</label>
+      <input
+        id="buscar"
+        type="search"
+        placeholder="Lisina, equilibrio, péptido…"
+      />
+      <label for="filtroCultivo">Cultivo:</label>
+      <select id="filtroCultivo">
+        <option value="">Todos los cultivos</option>
+      </select>
+      <button id="limpiarFiltros" type="button">Limpiar filtros</button>
+      <a class="nav-button" href="teoria_aminoacidos.html"
+        >Teoría de aminoácidos</a
+      >
+      <a class="nav-button" href="memorice.html">Memorice</a>
+    </div>
+    <!-- Contenido principal: instrucciones, listado y espacio de consulta -->
+    <main class="container">
+      <!-- Instrucciones generales del taller -->
+      <section class="notice" id="instrucciones">
+        <h2>Instrucciones y organización del taller</h2>
+        <p>
+          <strong>Objetivo:</strong> aplicar conceptos de Química General a
+          situaciones relacionadas con la agronomía y los recursos naturales,
+          mediante la resolución colaborativa de retos sobre aminoácidos y
+          péptidos, sus estructuras y equilibrios ácido-base, y la
+          fundamentación de las respuestas.
+        </p>
+        <h3>Desarrollo de la actividad</h3>
+        <p>
+          Durante el módulo de clases, los estudiantes trabajarán en grupos para
+          resolver el reto asignado por el profesor. El docente indicará el
+          tiempo disponible, los materiales autorizados y el formato de entrega.
+        </p>
+        <p>
+          Antes de comenzar, todos los estudiantes deberán conocer las
+          instrucciones y la pauta de evaluación. Cada grupo analizará el
+          contexto, identificará los datos y supuestos relevantes y responderá
+          las tres preguntas. Cuando corresponda, presentará cálculos, unidades
+          e interpretación; en las preguntas conceptuales, explicará el
+          razonamiento.
+        </p>
+        <p>
+          Todos los integrantes deberán contribuir al trabajo y estar en
+          condiciones de explicar la solución completa. Al finalizar, el grupo
+          entregará sus respuestas en el formato indicado. El profesor y los
+          ayudantes revisarán las entregas y podrán solicitar aclaraciones.
+        </p>
+        <p>
+          La retroalimentación señalará, al menos, un aspecto logrado y uno por
+          mejorar. La calificación es grupal y todos los integrantes recibirán
+          la misma calificación.
+        </p>
+        <h3>Pauta general de evaluación</h3>
+        <div class="rubric-box">
+          <p>
+            Cada una de las tres preguntas se evalúa con tres criterios, cada
+            uno de 0 a 3 puntos:
+            <strong
+              >A. Corrección química y cumplimiento de lo solicitado;</strong
+            >
+            <strong>B. Procedimiento y fundamentación;</strong> y
+            <strong>C. Comunicación e interpretación.</strong>
+          </p>
+          <ul>
+            <li>
+              <strong>3 puntos:</strong> respuesta correcta, completa,
+              fundamentada y comunicada con claridad.
+            </li>
+            <li>
+              <strong>2 puntos:</strong> respuesta esencialmente adecuada, con
+              una omisión o imprecisión menor.
+            </li>
+            <li>
+              <strong>1 punto:</strong> respuesta parcial, incompleta o con
+              errores importantes, aunque contiene elementos pertinentes.
+            </li>
+            <li>
+              <strong>0 puntos:</strong> no responde o la respuesta no aporta
+              elementos pertinentes.
+            </li>
+          </ul>
+        </div>
+        <p>
+          Cada pregunta tiene un máximo de 9 puntos y cada reto un máximo de 27.
+          Se aceptan procedimientos alternativos científicamente correctos y
+          diferencias razonables de redondeo. Un error de cálculo inicial no se
+          penaliza de nuevo en cada paso posterior si el procedimiento
+          subsiguiente es coherente.
+        </p>
+        <p>
+          <strong>Cálculo de la calificación grupal:</strong> Nota = (puntaje
+          obtenido / 27) × 6 + 1.
+        </p>
+        <p>
+          <strong>Uso de esta página:</strong> seleccione el reto asignado en el
+          panel o búsquelo por cultivo, aminoácido o contenido. Esta página
+          permite consultar las preguntas; no guarda ni envía respuestas.
+        </p>
+      </section>
+      <!-- Panel de selección y área donde se despliega el reto elegido -->
+      <div class="layout">
+        <aside class="panel" aria-label="Navegación de retos">
+          <h2>Seleccionar reto</h2>
+          <p id="contador" class="panel-summary" aria-live="polite">
+            Cargando retos…
+          </p>
+          <div id="listaRetos" class="reto-list"></div>
+          <div
+            id="sinResultados"
+            class="empty"
+            style="display: none"
+            role="status"
+          >
+            No se encontraron retos con estos criterios.
+          </div>
+        </aside>
+        <section id="workspace" class="workspace" aria-live="polite">
+          <div class="initial">
+            <h2>Seleccione un reto</h2>
+            <p>
+              Las instrucciones del taller se encuentran arriba. Seleccione un
+              reto para consultar su contexto, datos y preguntas.
+            </p>
+          </div>
+        </section>
+      </div>
+      <p class="footer-note">
+        QIM201G — Taller Colaborativo N.° 3. Los retos se cargan desde el
+        archivo retos_taller3.json.
+      </p>
+    </main>
+    <!-- Lógica de carga, búsqueda, filtrado y presentación de tarjetas -->
+    <script>
+      const ARCHIVO_DATOS = "retos_taller3.json";
+      const listaRetos = document.getElementById("listaRetos");
+      const workspace = document.getElementById("workspace");
+      const contador = document.getElementById("contador");
+      const sinResultados = document.getElementById("sinResultados");
+      const buscar = document.getElementById("buscar");
+      const filtroCultivo = document.getElementById("filtroCultivo");
+      const limpiarFiltros = document.getElementById("limpiarFiltros");
+      let retos = [];
+      let retoActivo = null;
+      function escaparHTML(texto) {
+        return String(texto)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+      function textoBuscable(reto) {
+        return [
+          reto.numero,
+          reto.titulo,
+          reto.cultivo,
+          reto.aminoacido,
+          reto.abreviatura,
+          reto.contexto,
+          reto.R,
+          (reto.pKas || []).map((p) => p.grupo + " " + p.valor).join(" "),
+          (reto.pHConsulta || []).join(" "),
+          (reto.dipéptido?.inicial || []).join(" "),
+          (reto.dipéptido?.invertido || []).join(" "),
+        ]
+          .join(" ")
+          .toLowerCase();
+      }
+      function obtenerFiltrados() {
+        const termino = buscar.value.trim().toLowerCase();
+        const cultivo = filtroCultivo.value;
+        return retos.filter(
+          (reto) =>
+            (!termino || textoBuscable(reto).includes(termino)) &&
+            (!cultivo || reto.cultivo === cultivo),
+        );
+      }
+      function crearFiltrosCultivo() {
+        [...new Set(retos.map((reto) => reto.cultivo))]
+          .sort((a, b) => a.localeCompare(b, "es"))
+          .forEach((cultivo) => {
+            const opcion = document.createElement("option");
+            opcion.value = cultivo;
+            opcion.textContent = cultivo;
+            filtroCultivo.appendChild(opcion);
+          });
+      }
+      function renderizarLista() {
+        const filtrados = obtenerFiltrados();
+        listaRetos.innerHTML = "";
+        contador.textContent = `${filtrados.length} de ${retos.length} retos disponibles`;
+        sinResultados.style.display = filtrados.length === 0 ? "block" : "none";
+        filtrados.forEach((reto) => {
+          const boton = document.createElement("button");
+          boton.type = "button";
+          boton.className =
+            "reto-button" + (retoActivo === reto.numero ? " active" : "");
+          boton.setAttribute(
+            "aria-pressed",
+            retoActivo === reto.numero ? "true" : "false",
+          );
+          boton.innerHTML = `<strong>Reto ${escaparHTML(reto.numero)}. ${escaparHTML(reto.titulo)}</strong><small>${escaparHTML(reto.cultivo)} · ${escaparHTML(reto.aminoacido)}</small>`;
+          boton.addEventListener("click", () => seleccionarReto(reto.numero));
+          listaRetos.appendChild(boton);
+        });
+      }
+      function renderizarDatos(reto) {
+        const lineas = (reto.pKas || []).map(
+          (dato) =>
+            `<li>pKa del ${escaparHTML(dato.grupo)} = ${escaparHTML(dato.valor)}</li>`,
+        );
+        lineas.push(`<li>pKw = ${escaparHTML(reto.pKw)}</li>`);
+        lineas.push("<li>Temperatura: 25 °C</li>");
+        return `<section class="section"><h3>Datos disponibles</h3><div class="data-box"><ul>${lineas.join("")}</ul></div></section>`;
+      }
+      function renderizarPreguntas(reto) {
+        const ph = (reto.pHConsulta || []).join(" y ");
+        const r = escaparHTML(reto.R || "");
+        const inicial = (reto.dipéptido?.inicial || []).join("–");
+        const invertido = (reto.dipéptido?.invertido || []).join("–");
+        const rInicial = reto.dipéptido?.R || {};
+        const rTexto = (reto.dipéptido?.inicial || [])
+          .map(
+            (sigla) =>
+              `${escaparHTML(sigla)}: R = ${escaparHTML(rInicial[sigla] || "")}`,
+          )
+          .join("; ");
+        return `
+<section class="section">
+<h3>1. Estructura y clasificación</h3>
+<ol class="questions">
+<li>Escriba la fórmula estructural condensada de ${escaparHTML(reto.aminoacido)} con R = ${r}. Represente el grupo amino α como –NH₂ y el carboxilo α como –COOH. Identifique ambos grupos, el carbono α y la cadena lateral.</li>
+<li>Clasifique la cadena lateral como ácida, básica o neutra cerca de pH 7 y justifique su respuesta a partir de su estructura.</li>
+<li>¿Es ${escaparHTML(reto.abreviatura)} un aminoácido esencial en la dieta de un adulto sano? ¿Puede sintetizarlo la planta de ${escaparHTML(reto.cultivo.toLowerCase())}? Explique qué significa «esencial» en este contexto.</li>
+</ol>
+</section>
+<section class="section">
+<h3>2. Equilibrio ácido-base</h3>
+<ol class="questions">
+<li>Parta de la forma completamente protonada, predominante a pH 0. Dibuje las especies que predominan a medida que aumenta el pH. Indique qué grupo pierde un protón en cada etapa, la carga neta de cada especie y su intervalo de predominio. ¿Cómo se relacionan las concentraciones de dos especies consecutivas cuando el pH coincide con el pKa de esa etapa?</li>
+<li>Identifique en su esquema las especies predominantes a pH ${escaparHTML(ph)}. Justifique sus elecciones con los pKa.</li>
+<li>Seleccione los dos pKa pertinentes y estime el punto isoeléctrico (pI). Interprete su significado en términos de la carga neta media en solución. Dibuje la especie predominante al pI, localice sus cargas y escriba cómo se denomina.</li>
+<li>Escriba el par conjugado del grupo amino α y calcule el pKb de su forma desprotonada.</li>
+</ol>
+</section>
+<section class="section">
+<h3>3. Enlace peptídico</h3>
+<ol class="questions">
+<li>Escriba o dibuje la fórmula estructural condensada del dipéptido ${escaparHTML(inicial)} en sentido N → C. Represente los extremos libres como –NH₂ y –COOH. Use estos grupos R: ${rTexto}.</li>
+<li>Marque el enlace peptídico C–N e identifique los extremos N y C. Indique qué grupo carboxilo α y qué grupo amino α participan en la unión. Escriba la ecuación formal de condensación e incluya el agua.</li>
+<li>Dibuje ${escaparHTML(invertido)}. Compare ambas estructuras e indique qué residuo queda en cada extremo y qué grupos forman el enlace peptídico en cada caso.</li>
+</ol>
+</section>`;
+      }
+      function seleccionarReto(numero) {
+        const reto = retos.find((item) => item.numero === numero);
+        if (!reto) return;
+        retoActivo = numero;
+        renderizarLista();
+        workspace.innerHTML = `
+<h2>Reto ${escaparHTML(reto.numero)}. ${escaparHTML(reto.titulo)}</h2>
+<p class="subtitle">Tarjeta de preguntas · ${escaparHTML(reto.cultivo)} · ${escaparHTML(reto.aminoacido)}</p>
+<div class="tags"><span class="tag">${escaparHTML(reto.cultivo)}</span><span class="tag purple">${escaparHTML(reto.aminoacido)} (${escaparHTML(reto.abreviatura)})</span><span class="tag">Aminoácidos y péptidos</span></div>
+<section class="section"><h3>Contexto</h3><p>${escaparHTML(reto.contexto)}</p></section>
+${renderizarDatos(reto)}
+${renderizarPreguntas(reto)}
+<section class="section"><h3>Producto esperado</h3><div class="product-box"><p>Respuestas fundamentadas para las tres preguntas. Incluya estructuras, ecuaciones, cálculos, unidades y explicación cuando corresponda.</p><p>La entrega se realizará en el formato indicado por el profesor.</p></div></section>`;
+      }
+      function mostrarError() {
+        contador.textContent = "No se pudieron cargar los retos.";
+        workspace.innerHTML = `<div class="error"><strong>No se pudo cargar ${escaparHTML(ARCHIVO_DATOS)}.</strong><p>Compruebe que el archivo JSON esté en la misma carpeta que este HTML, que su nombre coincida y que la página se esté abriendo desde un servidor local.</p></div>`;
+      }
+      async function iniciar() {
+        try {
+          const respuesta = await fetch(ARCHIVO_DATOS);
+          if (!respuesta.ok)
+            throw new Error("No se pudo leer el archivo JSON.");
+          const datos = await respuesta.json();
+          if (!Array.isArray(datos.retos) || datos.retos.length !== 16)
+            throw new Error(
+              "El JSON debe contener 16 retos en la propiedad retos.",
+            );
+          retos = datos.retos.sort((a, b) => a.numero - b.numero);
+          crearFiltrosCultivo();
+          renderizarLista();
+        } catch (error) {
+          console.error(error);
+          mostrarError();
+        }
+      }
+      buscar.addEventListener("input", renderizarLista);
+      filtroCultivo.addEventListener("change", renderizarLista);
+      limpiarFiltros.addEventListener("click", () => {
+        buscar.value = "";
+        filtroCultivo.value = "";
+        renderizarLista();
+      });
+      iniciar();
+    </script>
+  </body>
+</html>
