@@ -20,9 +20,11 @@
         --amarillo: #ffe49b;
         --verde: #a6e5c3;
       }
+
       * {
         box-sizing: border-box;
       }
+
       body {
         margin: 0;
         color: #34495e;
@@ -30,22 +32,27 @@
         font-family: Arial, Helvetica, sans-serif;
         line-height: 1.55;
       }
+
       header {
         padding: 26px 5vw;
         color: white;
         background: linear-gradient(135deg, #123b5d, #2d6a8a);
       }
+
       header h1 {
         margin: 0 0 5px;
         font-size: clamp(1.8rem, 4vw, 2.5rem);
       }
+
       header p {
         margin: 0;
       }
+
       main {
         width: min(1250px, 94%);
         margin: 25px auto 50px;
       }
+
       .intro,
       .menu,
       .detail {
@@ -54,17 +61,20 @@
         background: var(--blanco);
         box-shadow: 0 3px 12px #2030470b;
       }
+
       .page-nav {
         position: sticky;
         top: 0;
         z-index: 10;
         display: flex;
         justify-content: flex-end;
+        gap: 8px;
         padding: 10px 5vw;
         background: white;
         border-bottom: 1px solid #d7e4f2;
         box-shadow: 0 2px 6px #00000010;
       }
+
       .page-nav a {
         display: inline-block;
         padding: 10px 16px;
@@ -74,37 +84,45 @@
         font-weight: bold;
         text-decoration: none;
       }
+
       .page-nav a:hover {
         background: #10395f;
       }
+
       .intro {
         margin-bottom: 20px;
         padding: 18px 22px;
       }
+
       .intro h2,
       .menu h2,
       .detail h2 {
         margin-top: 0;
         color: var(--azul);
       }
+
       .layout {
         display: grid;
         grid-template-columns: minmax(250px, 0.75fr) minmax(0, 1.8fr);
         gap: 20px;
         align-items: start;
       }
+
       .menu,
       .detail {
         padding: 20px;
       }
+
       .filters {
         display: grid;
         gap: 10px;
         margin-bottom: 15px;
       }
+
       label {
         font-weight: bold;
       }
+
       input,
       select {
         width: 100%;
@@ -115,12 +133,14 @@
         background: white;
         font: inherit;
       }
+
       .legend {
         display: flex;
         flex-wrap: wrap;
         gap: 7px;
         margin: 12px 0 16px;
       }
+
       .legend span,
       .category-badge {
         display: inline-block;
@@ -129,21 +149,26 @@
         color: #203047;
         font-size: 0.83rem;
       }
+
       .essential {
         background: var(--rosado);
       }
+
       .nonessential {
         background: var(--amarillo);
       }
+
       .conditional {
         background: var(--verde);
       }
+
       #aminoMenu {
         display: grid;
         gap: 7px;
         max-height: 65vh;
         overflow-y: auto;
       }
+
       .amino-option {
         width: 100%;
         padding: 10px 12px;
@@ -156,20 +181,25 @@
         font: inherit;
         cursor: pointer;
       }
+
       .amino-option:hover,
       .amino-option.active {
         border-color: var(--azul);
         background: var(--azul-claro);
       }
+
       .amino-option[data-category="esencial"] {
         border-left-color: #d9829c;
       }
+
       .amino-option[data-category="no-esencial"] {
         border-left-color: #d9a900;
       }
+
       .amino-option[data-category="condicionalmente-esencial"] {
         border-left-color: #3b9b69;
       }
+
       .detail-header {
         display: flex;
         flex-wrap: wrap;
@@ -177,9 +207,11 @@
         align-items: center;
         gap: 10px;
       }
+
       .detail-header h2 {
         margin-bottom: 0;
       }
+
       .structure-frame {
         display: grid;
         place-items: center;
@@ -191,38 +223,46 @@
         border-radius: 12px;
         background: #fff;
       }
+
       .structure-frame img {
         display: block;
         max-width: min(100%, 500px);
         max-height: 320px;
         object-fit: contain;
       }
+
       .image-error {
         color: #8b1e1e;
         text-align: center;
       }
+
       .info-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 13px;
       }
+
       .info-card {
         padding: 15px;
         border: 1px solid var(--borde);
         border-radius: 10px;
         background: #f8fbff;
       }
+
       .info-card h3 {
         margin: 0 0 7px;
         color: var(--azul);
         font-size: 1.05rem;
       }
+
       .info-card p {
         margin: 0;
       }
+
       .food-card {
         grid-column: 1 / -1;
       }
+
       .note {
         margin-top: 18px;
         padding: 13px 15px;
@@ -231,11 +271,13 @@
         background: var(--azul-claro);
         font-size: 0.94rem;
       }
+
       .empty {
         padding: 12px;
         color: #5b6470;
         text-align: center;
       }
+
       footer {
         padding: 20px 5vw;
         color: #526174;
@@ -244,7 +286,8 @@
       }
 
       .pi-guide {
-        margin-bottom: 20px;
+        margin: 0 auto 20px;
+        width: min(1250px, 94%);
         padding: 18px 22px;
         border: 1px solid var(--borde);
         border-left: 5px solid var(--azul);
@@ -252,79 +295,99 @@
         background: #fff;
         box-shadow: 0 3px 12px #2030470b;
       }
+
       .pi-guide h2,
       .pi-guide h3 {
         color: var(--azul);
       }
+
       .pi-guide .formula {
         padding: 10px 14px;
         border-radius: 8px;
         background: var(--azul-claro);
         font-weight: bold;
       }
+
       @media (max-width: 800px) {
         .layout {
           grid-template-columns: 1fr;
         }
+
         #aminoMenu {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           max-height: none;
         }
+
         .structure-frame {
           min-height: 220px;
         }
       }
+
       @media (max-width: 520px) {
         .page-nav {
           position: static;
+          flex-wrap: wrap;
+          justify-content: center;
         }
+
         .menu,
         .detail {
           padding: 15px;
         }
+
         #aminoMenu,
         .info-grid {
           grid-template-columns: 1fr;
         }
+
         .food-card {
           grid-column: auto;
         }
       }
     </style>
   </head>
+
   <body>
-    <!-- Encabezado del recurso -->
     <header>
       <h1>Explora los aminoácidos</h1>
-      <p>QIM201G · Química para estudiantes de Agronomía, Forestal y Recursos Naturales UC · Segundo semestre</p>
+      <p>
+        QIM201G · Química para estudiantes de Agronomía, Forestal y Recursos
+        Naturales UC · Segundo semestre
+      </p>
     </header>
-    <!-- Enlace de navegación entre actividades -->
+
     <nav class="page-nav" aria-label="Navegación entre actividades">
       <a href="memorice.html">Volver al memorice</a>
-      <a class="nav-button" href="taller3.html">Volver al Taller N°3</a>
+      <a href="taller3.html">Volver al Taller N.° 3</a>
     </nav>
-    
+
     <main>
-      <!-- Introducción y leyenda de categorías nutricionales -->
       <section class="intro">
         <h2>Proteínas y aminoácidos</h2>
-        <p>Los aminoácidos son componentes de las proteínas y participan en múltiples procesos celulares. Selecciona uno de la lista para revisar su estructura, clasificación nutricional, funciones y relación con plantas, cultivos, agricultura y recursos naturales.</p>
+        <p>
+          Los aminoácidos son componentes de las proteínas y participan en
+          múltiples procesos celulares. Selecciona uno de la lista para revisar
+          su estructura, clasificación nutricional, funciones y relación con
+          plantas, cultivos, agricultura y recursos naturales.
+        </p>
         <div class="legend" aria-label="Categorías nutricionales humanas">
           <span class="essential">Rosado: esencial en la dieta humana</span>
           <span class="nonessential">Amarillo: no esencial en la dieta humana</span>
           <span class="conditional">Verde: condicionalmente esencial</span>
         </div>
       </section>
-      <!-- Búsqueda, filtro y panel de información -->
-      
-      
+
       <div class="layout">
         <aside class="menu">
           <h2>Lista de aminoácidos</h2>
           <div class="filters">
             <div>
-              <label for="search">Buscar</label>
-              <input id="search" type="search" placeholder="Escribe un nombre…" />
+              <label for="search">Buscar por nombre o sigla</label>
+              <input
+                id="search"
+                type="search"
+                placeholder="Escribe un nombre o una sigla…"
+              />
             </div>
             <div>
               <label for="categoryFilter">Filtrar por categoría</label>
@@ -332,35 +395,67 @@
                 <option value="todos">Todos</option>
                 <option value="esencial">Esenciales</option>
                 <option value="no-esencial">No esenciales</option>
-                <option value="condicionalmente-esencial">Condicionalmente esenciales</option>
+                <option value="condicionalmente-esencial">
+                  Condicionalmente esenciales
+                </option>
               </select>
             </div>
           </div>
           <div id="aminoMenu" aria-label="Aminoácidos disponibles"></div>
         </aside>
+
         <article id="detail" class="detail" aria-live="polite">
           <p>Selecciona un aminoácido para ver su información.</p>
         </article>
       </div>
     </main>
 
-    <!-- Explicación general del cálculo del punto isoeléctrico -->
-<section class="pi-guide">
-  <h2>¿Cómo se calcula el punto isoeléctrico (pI)?</h2>
-  <p>El punto isoeléctrico es el pH al que la carga neta media del aminoácido es cero. Para estimarlo, identifica primero la especie con carga neta cero y promedia los dos pKa que delimitan su predominio.</p>
-  <p class="formula">pI ≈ (pKa anterior + pKa posterior) / 2</p>
-  <h3>¿Qué dos pKa se promedian?</h3>
-  <ul>
-    <li><strong>Aminoácidos sin cadena lateral ionizable:</strong> se promedian el pKa del carboxilo α y el del grupo amonio α. Ejemplo: glicina, pI ≈ (2,34 + 9,60) / 2 = <strong>5,97</strong>.</li>
-    <li><strong>Aminoácidos con cadena lateral ácida</strong>, como aspartato o glutamato: se promedian los dos pKa de los grupos carboxilo. Ejemplo: ácido aspártico, pI ≈ (1,88 + 3,65) / 2 = <strong>2,77</strong>.</li>
-    <li><strong>Aminoácidos con cadena lateral básica</strong>, como lisina: se promedian los dos pKa de los grupos que mantienen la especie neutra entre sus desprotonaciones; en lisina, los pKa de los grupos amonio α y lateral: pI ≈ (8,95 + 10,53) / 2 = <strong>9,74</strong>.</li>
-  </ul>
-  <p><strong>Importante:</strong> no se promedian automáticamente todos los pKa ni siempre los mismos dos. Primero se ordenan las desprotonaciones al aumentar el pH, se asigna la carga neta de cada especie y se eligen los dos pKa que rodean a la especie de carga neta cero.</p>
-  <p>Cuando el pH coincide con el pKa de una etapa, las concentraciones de las dos especies conjugadas de esa etapa son iguales.</p>
-</section>
-    <!-- Identificación del curso y público del recurso -->
-    <footer>Material de apoyo para QIM201G · Química · Agronomía, Forestal y Recursos Naturales</footer>
-    <!-- Datos de aminoácidos y funciones interactivas -->
+    <section class="pi-guide">
+      <h2>¿Cómo se calcula el punto isoeléctrico (pI)?</h2>
+      <p>
+        El punto isoeléctrico es el pH al que la carga neta media del aminoácido
+        es cero. Para estimarlo, identifica primero la especie con carga neta
+        cero y promedia los dos pKa que delimitan su predominio.
+      </p>
+      <p class="formula">pI ≈ (pKa anterior + pKa posterior) / 2</p>
+
+      <h3>¿Qué dos pKa se promedian?</h3>
+      <ul>
+        <li>
+          <strong>Aminoácidos sin cadena lateral ionizable:</strong> se
+          promedian el pKa del carboxilo α y el del grupo amonio α. Ejemplo:
+          glicina, pI ≈ (2,34 + 9,60) / 2 = <strong>5,97</strong>.
+        </li>
+        <li>
+          <strong>Aminoácidos con cadena lateral ácida</strong>, como aspartato
+          o glutamato: se promedian los dos pKa de los grupos carboxilo.
+          Ejemplo: ácido aspártico, pI ≈ (1,88 + 3,65) / 2 =
+          <strong>2,77</strong>.
+        </li>
+        <li>
+          <strong>Aminoácidos con cadena lateral básica</strong>, como lisina:
+          se promedian los dos pKa de los grupos que mantienen la especie neutra
+          entre sus desprotonaciones; en lisina, los pKa de los grupos amonio α
+          y lateral: pI ≈ (8,95 + 10,53) / 2 = <strong>9,74</strong>.
+        </li>
+      </ul>
+      <p>
+        <strong>Importante:</strong> no se promedian automáticamente todos los
+        pKa ni siempre los mismos dos. Primero se ordenan las desprotonaciones
+        al aumentar el pH, se asigna la carga neta de cada especie y se eligen
+        los dos pKa que rodean a la especie de carga neta cero.
+      </p>
+      <p>
+        Cuando el pH coincide con el pKa de una etapa, las concentraciones de
+        las dos especies conjugadas de esa etapa son iguales.
+      </p>
+    </section>
+
+    <footer>
+      Material de apoyo para QIM201G · Química · Agronomía, Forestal y Recursos
+      Naturales
+    </footer>
+
     <script>
       const aminoacidos = [
         {
@@ -368,255 +463,375 @@
           nombre: "Alanina",
           imagen: "aminoacidos/imagenes/Alanina.png",
           categoria: "no-esencial",
-          funcion: "Participa en el metabolismo de la glucosa y en el transporte de nitrógeno entre tejidos. En el ciclo glucosa-alanina, el músculo puede transferir nitrógeno al hígado junto con un esqueleto carbonado.",
-          agronomia: "Participa en el metabolismo del carbono y del nitrógeno. En plantas, estos procesos se relacionan con la síntesis y el recambio de aminoácidos y proteínas. Esto no implica que aplicar alanina directamente al cultivo mejore su crecimiento.",
-          alimentos: "Carnes, pescado, huevos, lácteos, legumbres, frutos secos y cereales."
+          funcion:
+            "Participa en el metabolismo de la glucosa y en el transporte de nitrógeno entre tejidos. En el ciclo glucosa-alanina, el músculo puede transferir nitrógeno al hígado junto con un esqueleto carbonado.",
+          agronomia:
+            "Participa en el metabolismo del carbono y del nitrógeno. En plantas, estos procesos se relacionan con la síntesis y el recambio de aminoácidos y proteínas. Esto no implica que aplicar alanina directamente al cultivo mejore su crecimiento.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, legumbres, frutos secos y cereales."
         },
         {
           id: "arginina",
           nombre: "Arginina",
           imagen: "aminoacidos/imagenes/Arginina.png",
           categoria: "condicionalmente-esencial",
-          funcion: "Participa en el ciclo de la urea y es precursora de óxido nítrico, creatina y otros compuestos. Puede ser condicionalmente esencial en etapas de crecimiento o ante algunas situaciones de estrés fisiológico.",
-          agronomia: "Es un aminoácido rico en nitrógeno y puede acumularse en semillas y tejidos de reserva. Su estudio permite comprender el almacenamiento y la movilización de nitrógeno durante el desarrollo vegetal.",
-          alimentos: "Carnes, pescado, huevos, lácteos, legumbres, frutos secos y semillas."
+          funcion:
+            "Participa en el ciclo de la urea y es precursora de óxido nítrico, creatina y otros compuestos. Puede ser condicionalmente esencial en etapas de crecimiento o ante algunas situaciones de estrés fisiológico.",
+          agronomia:
+            "Es un aminoácido rico en nitrógeno y puede acumularse en semillas y tejidos de reserva. Su estudio permite comprender el almacenamiento y la movilización de nitrógeno durante el desarrollo vegetal.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, legumbres, frutos secos y semillas."
         },
         {
           id: "asparagina",
           nombre: "Asparagina",
           imagen: "aminoacidos/imagenes/Asparagina.png",
           categoria: "no-esencial",
-          funcion: "Participa en la síntesis de proteínas y en el transporte y metabolismo del nitrógeno. El organismo puede sintetizarla a partir de aspartato.",
-          agronomia: "En muchas plantas, la asparagina participa en el transporte y almacenamiento de nitrógeno. Puede contribuir a la movilización de este elemento entre tejidos y durante la germinación.",
-          alimentos: "Espárragos, papas, legumbres, frutos secos, carnes, huevos y lácteos."
+          funcion:
+            "Participa en la síntesis de proteínas y en el transporte y metabolismo del nitrógeno. El organismo puede sintetizarla a partir de aspartato.",
+          agronomia:
+            "En muchas plantas, la asparagina participa en el transporte y almacenamiento de nitrógeno. Puede contribuir a la movilización de este elemento entre tejidos y durante la germinación.",
+          alimentos:
+            "Espárragos, papas, legumbres, frutos secos, carnes, huevos y lácteos."
         },
         {
           id: "acido_aspartico",
           nombre: "Ácido aspártico (aspartato)",
           imagen: "aminoacidos/imagenes/Acido_aspartico.png",
           categoria: "no-esencial",
-          funcion: "Interviene en reacciones de transferencia de nitrógeno, en la síntesis de nucleótidos y en rutas metabólicas conectadas con el ciclo de Krebs.",
-          agronomia: "Participa en la síntesis de otros aminoácidos y en rutas del metabolismo vegetal. Su estudio permite relacionar la asimilación de nitrógeno con la formación de compuestos orgánicos en las plantas.",
-          alimentos: "Carnes, pescado, huevos, lácteos, legumbres, espárragos y otros vegetales."
+          funcion:
+            "Interviene en reacciones de transferencia de nitrógeno, en la síntesis de nucleótidos y en rutas metabólicas conectadas con el ciclo de Krebs.",
+          agronomia:
+            "Participa en la síntesis de otros aminoácidos y en rutas del metabolismo vegetal. Su estudio permite relacionar la asimilación de nitrógeno con la formación de compuestos orgánicos en las plantas.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, legumbres, espárragos y otros vegetales."
         },
         {
           id: "cisteina",
           nombre: "Cisteína",
           imagen: "aminoacidos/imagenes/Cisteina.png",
           categoria: "condicionalmente-esencial",
-          funcion: "Contiene azufre y forma parte de proteínas. Es precursora de glutatión y puede sintetizarse a partir de metionina; por eso puede ser condicionalmente esencial en determinadas circunstancias.",
-          agronomia: "Contiene azufre y participa en la síntesis de proteínas y de glutatión vegetal, relacionado con el equilibrio redox y la respuesta a condiciones de estrés. La síntesis de aminoácidos azufrados requiere azufre disponible para la planta.",
-          alimentos: "Huevos, carnes, pescado, lácteos, legumbres, ajo, cebolla y frutos secos."
+          funcion:
+            "Contiene azufre y forma parte de proteínas. Es precursora de glutatión y puede sintetizarse a partir de metionina; por eso puede ser condicionalmente esencial en determinadas circunstancias.",
+          agronomia:
+            "Contiene azufre y participa en la síntesis de proteínas y de glutatión vegetal, relacionado con el equilibrio redox y la respuesta a condiciones de estrés. La síntesis de aminoácidos azufrados requiere azufre disponible para la planta.",
+          alimentos:
+            "Huevos, carnes, pescado, lácteos, legumbres, ajo, cebolla y frutos secos."
         },
         {
           id: "fenilalanina",
           nombre: "Fenilalanina",
           imagen: "aminoacidos/imagenes/Fenilalanina.png",
           categoria: "esencial",
-          funcion: "Debe obtenerse de la dieta. Es precursora de tirosina, a partir de la cual se producen catecolaminas, hormonas tiroideas y melanina.",
-          agronomia: "En las plantas, la fenilalanina es precursora de metabolitos de la ruta fenilpropanoide, relacionados con compuestos de defensa, pigmentos y componentes estructurales.",
-          alimentos: "Carnes, pescado, huevos, lácteos, soja, legumbres, frutos secos y semillas."
+          funcion:
+            "Debe obtenerse de la dieta. Es precursora de tirosina, a partir de la cual se producen catecolaminas, hormonas tiroideas y melanina.",
+          agronomia:
+            "En las plantas, la fenilalanina es precursora de metabolitos de la ruta fenilpropanoide, relacionados con compuestos de defensa, pigmentos y componentes estructurales.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, soja, legumbres, frutos secos y semillas."
         },
         {
           id: "glicina",
           nombre: "Glicina",
           imagen: "aminoacidos/imagenes/Glicina.png",
           categoria: "no-esencial",
-          funcion: "Es un componente abundante del colágeno y participa en la síntesis de otras moléculas, como creatina, hemo y nucleótidos. En ciertas condiciones, la demanda puede superar la capacidad de síntesis.",
-          agronomia: "Participa en el metabolismo vegetal y en la síntesis de proteínas. También interviene en procesos asociados con la fotorrespiración, relevantes para el metabolismo del carbono en las plantas.",
-          alimentos: "Carnes, pescado, gelatina y alimentos ricos en proteínas; también se encuentra en legumbres y semillas."
+          funcion:
+            "Es un componente abundante del colágeno y participa en la síntesis de otras moléculas, como creatina, hemo y nucleótidos. En ciertas condiciones, la demanda puede superar la capacidad de síntesis.",
+          agronomia:
+            "Participa en el metabolismo vegetal y en la síntesis de proteínas. También interviene en procesos asociados con la fotorrespiración, relevantes para el metabolismo del carbono en las plantas.",
+          alimentos:
+            "Carnes, pescado, gelatina y alimentos ricos en proteínas; también se encuentra en legumbres y semillas."
         },
         {
           id: "acido_glutamico",
           nombre: "Ácido glutámico (glutamato)",
           imagen: "aminoacidos/imagenes/Acido_glutamico.png",
           categoria: "no-esencial",
-          funcion: "Participa en el metabolismo del nitrógeno y de otros aminoácidos. El glutamato también cumple funciones de neurotransmisor en el sistema nervioso central.",
-          agronomia: "Es central en la asimilación del nitrógeno vegetal y sirve como precursor de otros aminoácidos. Su metabolismo conecta la incorporación de nitrógeno con la síntesis de compuestos orgánicos en la planta.",
-          alimentos: "Carnes, pescado, quesos, tomates, champiñones, legumbres y alimentos fermentados."
+          funcion:
+            "Participa en el metabolismo del nitrógeno y de otros aminoácidos. El glutamato también cumple funciones de neurotransmisor en el sistema nervioso central.",
+          agronomia:
+            "Es central en la asimilación del nitrógeno vegetal y sirve como precursor de otros aminoácidos. Su metabolismo conecta la incorporación de nitrógeno con la síntesis de compuestos orgánicos en la planta.",
+          alimentos:
+            "Carnes, pescado, quesos, tomates, champiñones, legumbres y alimentos fermentados."
         },
         {
           id: "glutamina",
           nombre: "Glutamina",
           imagen: "aminoacidos/imagenes/Glutamina.png",
           categoria: "condicionalmente-esencial",
-          funcion: "Es importante para el transporte de nitrógeno y puede ser utilizada como combustible por ciertas células, como enterocitos y células del sistema inmunitario. Puede ser condicionalmente esencial durante estrés metabólico grave.",
-          agronomia: "Participa en la asimilación y el transporte de nitrógeno en las plantas. Puede formarse durante la incorporación de amonio y aportar nitrógeno para la síntesis de otros aminoácidos.",
-          alimentos: "Carnes, pescado, huevos, lácteos, legumbres, frutos secos y algunos vegetales."
+          funcion:
+            "Es importante para el transporte de nitrógeno y puede ser utilizada como combustible por ciertas células, como enterocitos y células del sistema inmunitario. Puede ser condicionalmente esencial durante estrés metabólico grave.",
+          agronomia:
+            "Participa en la asimilación y el transporte de nitrógeno en las plantas. Puede formarse durante la incorporación de amonio y aportar nitrógeno para la síntesis de otros aminoácidos.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, legumbres, frutos secos y algunos vegetales."
         },
         {
           id: "histidina",
           nombre: "Histidina",
           imagen: "aminoacidos/imagenes/Histidina.png",
           categoria: "esencial",
-          funcion: "Debe obtenerse de la dieta. Es precursora de histamina y forma parte de proteínas; también puede contribuir a la capacidad amortiguadora de algunas proteínas.",
-          agronomia: "Forma parte de las proteínas vegetales y participa en el metabolismo de las plantas. Su grupo funcional permite analizar cómo la estructura de los aminoácidos determina sus propiedades ácido-base.",
-          alimentos: "Carnes, pescado, huevos, lácteos, soja, legumbres y cereales integrales."
+          funcion:
+            "Debe obtenerse de la dieta. Es precursora de histamina y forma parte de proteínas; también puede contribuir a la capacidad amortiguadora de algunas proteínas.",
+          agronomia:
+            "Forma parte de las proteínas vegetales y participa en el metabolismo de las plantas. Su grupo funcional permite analizar cómo la estructura de los aminoácidos determina sus propiedades ácido-base.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, soja, legumbres y cereales integrales."
         },
         {
           id: "isoleucina",
           nombre: "Isoleucina",
           imagen: "aminoacidos/imagenes/Isoleucina.png",
           categoria: "esencial",
-          funcion: "Es un aminoácido esencial de cadena ramificada. Participa en la síntesis de proteínas y puede ser oxidado en el músculo.",
-          agronomia: "Forma parte de las proteínas de las plantas y de sus semillas. Su presencia contribuye al perfil de aminoácidos que se utiliza para caracterizar la calidad nutricional de las proteínas vegetales.",
-          alimentos: "Carnes, pescado, huevos, lácteos, soja, legumbres y frutos secos."
+          funcion:
+            "Es un aminoácido esencial de cadena ramificada. Participa en la síntesis de proteínas y puede ser oxidado en el músculo.",
+          agronomia:
+            "Forma parte de las proteínas de las plantas y de sus semillas. Su presencia contribuye al perfil de aminoácidos que se utiliza para caracterizar la calidad nutricional de las proteínas vegetales.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, soja, legumbres y frutos secos."
         },
         {
           id: "leucina",
           nombre: "Leucina",
           imagen: "aminoacidos/imagenes/Leucina.png",
           categoria: "esencial",
-          funcion: "Es un aminoácido esencial de cadena ramificada. Participa en la síntesis proteica y actúa como señal metabólica relacionada con la disponibilidad de nutrientes.",
-          agronomia: "Forma parte de las proteínas vegetales y contribuye al perfil de aminoácidos de granos y semillas. Puede considerarse al comparar la calidad nutricional de distintas fuentes vegetales de proteína.",
-          alimentos: "Carnes, pescado, huevos, lácteos, soja, legumbres y frutos secos."
+          funcion:
+            "Es un aminoácido esencial de cadena ramificada. Participa en la síntesis proteica y actúa como señal metabólica relacionada con la disponibilidad de nutrientes.",
+          agronomia:
+            "Forma parte de las proteínas vegetales y contribuye al perfil de aminoácidos de granos y semillas. Puede considerarse al comparar la calidad nutricional de distintas fuentes vegetales de proteína.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, soja, legumbres y frutos secos."
         },
         {
           id: "lisina",
           nombre: "Lisina",
           imagen: "aminoacidos/imagenes/Lisina.png",
           categoria: "esencial",
-          funcion: "Debe obtenerse de la dieta. Participa en la síntesis de proteínas y es necesaria para modificaciones de proteínas como el colágeno; también es precursora de carnitina.",
-          agronomia: "Es relevante para evaluar la calidad nutricional de las proteínas de los cultivos. En algunos cereales, su proporción puede ser limitante para la alimentación humana o animal.",
-          alimentos: "Carnes, pescado, huevos, lácteos, soja, lentejas, porotos y otras legumbres."
+          funcion:
+            "Debe obtenerse de la dieta. Participa en la síntesis de proteínas y es necesaria para modificaciones de proteínas como el colágeno; también es precursora de carnitina.",
+          agronomia:
+            "Es relevante para evaluar la calidad nutricional de las proteínas de los cultivos. En algunos cereales, su proporción puede ser limitante para la alimentación humana o animal.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, soja, lentejas, porotos y otras legumbres."
         },
         {
           id: "metionina",
           nombre: "Metionina",
           imagen: "aminoacidos/imagenes/Metionina.png",
           categoria: "esencial",
-          funcion: "Es un aminoácido esencial que contiene azufre. Participa en la transferencia de grupos metilo y puede aportar azufre para la síntesis de cisteína.",
-          agronomia: "Es un aminoácido azufrado presente en las proteínas vegetales. Su contenido en semillas y granos contribuye a caracterizar su calidad nutricional; la síntesis vegetal de aminoácidos azufrados requiere disponibilidad de azufre.",
-          alimentos: "Huevos, pescado, carnes, lácteos, semillas, frutos secos y legumbres."
+          funcion:
+            "Es un aminoácido esencial que contiene azufre. Participa en la transferencia de grupos metilo y puede aportar azufre para la síntesis de cisteína.",
+          agronomia:
+            "Es un aminoácido azufrado presente en las proteínas vegetales. Su contenido en semillas y granos contribuye a caracterizar su calidad nutricional; la síntesis vegetal de aminoácidos azufrados requiere disponibilidad de azufre.",
+          alimentos:
+            "Huevos, pescado, carnes, lácteos, semillas, frutos secos y legumbres."
         },
         {
           id: "prolina",
           nombre: "Prolina",
           imagen: "aminoacidos/imagenes/Prolina.png",
           categoria: "no-esencial",
-          funcion: "El organismo puede sintetizarla. Es abundante en el colágeno y contribuye a la estructura de proteínas y tejidos conectivos.",
-          agronomia: "Puede acumularse en plantas sometidas a algunas condiciones ambientales, como déficit hídrico o salinidad. Se estudia su asociación con respuestas al estrés, sin asumir que por sí sola cause tolerancia del cultivo.",
-          alimentos: "Carnes, pescado, huevos, lácteos y gelatina; también está presente en legumbres."
+          funcion:
+            "El organismo puede sintetizarla. Es abundante en el colágeno y contribuye a la estructura de proteínas y tejidos conectivos.",
+          agronomia:
+            "Puede acumularse en plantas sometidas a algunas condiciones ambientales, como déficit hídrico o salinidad. Se estudia su asociación con respuestas al estrés, sin asumir que por sí sola cause tolerancia del cultivo.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos y gelatina; también está presente en legumbres."
         },
         {
           id: "serina",
           nombre: "Serina",
           imagen: "aminoacidos/imagenes/Serina.png",
           categoria: "no-esencial",
-          funcion: "Participa en la síntesis de proteínas, fosfolípidos y otros metabolitos. También interviene en rutas de transferencia de unidades de un carbono.",
-          agronomia: "Participa en rutas del metabolismo vegetal y en la síntesis de proteínas y otros compuestos celulares. También se relaciona con procesos como la fotorrespiración.",
-          alimentos: "Huevos, carnes, pescado, lácteos, soja, legumbres, frutos secos y semillas."
+          funcion:
+            "Participa en la síntesis de proteínas, fosfolípidos y otros metabolitos. También interviene en rutas de transferencia de unidades de un carbono.",
+          agronomia:
+            "Participa en rutas del metabolismo vegetal y en la síntesis de proteínas y otros compuestos celulares. También se relaciona con procesos como la fotorrespiración.",
+          alimentos:
+            "Huevos, carnes, pescado, lácteos, soja, legumbres, frutos secos y semillas."
         },
         {
           id: "treonina",
           nombre: "Treonina",
           imagen: "aminoacidos/imagenes/Treonina.png",
           categoria: "esencial",
-          funcion: "Debe obtenerse de la dieta. Forma parte de proteínas y mucinas, y participa en el mantenimiento de tejidos y superficies mucosas.",
-          agronomia: "Forma parte de las proteínas vegetales y contribuye al perfil aminoacídico de semillas y granos. Su contenido puede considerarse al comparar la calidad nutricional de los cultivos.",
-          alimentos: "Carnes, pescado, huevos, lácteos, legumbres y frutos secos."
+          funcion:
+            "Debe obtenerse de la dieta. Forma parte de proteínas y mucinas, y participa en el mantenimiento de tejidos y superficies mucosas.",
+          agronomia:
+            "Forma parte de las proteínas vegetales y contribuye al perfil aminoacídico de semillas y granos. Su contenido puede considerarse al comparar la calidad nutricional de los cultivos.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, legumbres y frutos secos."
         },
         {
           id: "triptofano",
           nombre: "Triptófano",
           imagen: "aminoacidos/imagenes/Triptofano.png",
           categoria: "esencial",
-          funcion: "Es esencial y precursor de serotonina, melatonina y niacina. Estos productos participan en distintas funciones del sistema nervioso y del metabolismo.",
-          agronomia: "En plantas, el triptófano puede ser precursor de compuestos como el ácido indolacético en determinadas rutas biosintéticas. Esta relación depende de la especie y del contexto metabólico; no implica que aplicarlo directamente siempre regule el crecimiento.",
-          alimentos: "Huevos, lácteos, pavo, pescado, soja, legumbres, avena, frutos secos y semillas."
+          funcion:
+            "Es esencial y precursor de serotonina, melatonina y niacina. Estos productos participan en distintas funciones del sistema nervioso y del metabolismo.",
+          agronomia:
+            "En plantas, el triptófano puede ser precursor de compuestos como el ácido indolacético en determinadas rutas biosintéticas. Esta relación depende de la especie y del contexto metabólico; no implica que aplicarlo directamente siempre regule el crecimiento.",
+          alimentos:
+            "Huevos, lácteos, pavo, pescado, soja, legumbres, avena, frutos secos y semillas."
         },
         {
           id: "tirosina",
           nombre: "Tirosina",
           imagen: "aminoacidos/imagenes/Tirosina.png",
           categoria: "condicionalmente-esencial",
-          funcion: "Se sintetiza a partir de fenilalanina. Es precursora de catecolaminas, hormonas tiroideas y melanina; puede ser condicionalmente esencial si la disponibilidad de fenilalanina es insuficiente.",
-          agronomia: "En plantas, la tirosina puede contribuir a la síntesis de distintos metabolitos, incluidos algunos relacionados con pigmentos y defensa. Es un ejemplo de cómo los aminoácidos pueden servir como precursores de otras moléculas vegetales.",
-          alimentos: "Quesos, leche, huevos, carnes, pescado, soja, legumbres, frutos secos y semillas."
+          funcion:
+            "Se sintetiza a partir de fenilalanina. Es precursora de catecolaminas, hormonas tiroideas y melanina; puede ser condicionalmente esencial si la disponibilidad de fenilalanina es insuficiente.",
+          agronomia:
+            "En plantas, la tirosina puede contribuir a la síntesis de distintos metabolitos, incluidos algunos relacionados con pigmentos y defensa. Es un ejemplo de cómo los aminoácidos pueden servir como precursores de otras moléculas vegetales.",
+          alimentos:
+            "Quesos, leche, huevos, carnes, pescado, soja, legumbres, frutos secos y semillas."
         },
         {
           id: "valina",
           nombre: "Valina",
           imagen: "aminoacidos/imagenes/Valina.png",
           categoria: "esencial",
-          funcion: "Es un aminoácido esencial de cadena ramificada. Participa en la síntesis de proteínas y puede ser metabolizada en tejidos periféricos.",
-          agronomia: "Forma parte de las proteínas vegetales y contribuye al perfil aminoacídico de semillas y granos. Su estudio permite relacionar la composición de aminoácidos con la calidad nutricional de los cultivos.",
-          alimentos: "Carnes, pescado, huevos, lácteos, soja, legumbres, frutos secos y cereales integrales."
+          funcion:
+            "Es un aminoácido esencial de cadena ramificada. Participa en la síntesis de proteínas y puede ser metabolizada en tejidos periféricos.",
+          agronomia:
+            "Forma parte de las proteínas vegetales y contribuye al perfil aminoacídico de semillas y granos. Su estudio permite relacionar la composición de aminoácidos con la calidad nutricional de los cultivos.",
+          alimentos:
+            "Carnes, pescado, huevos, lácteos, soja, legumbres, frutos secos y cereales integrales."
         }
       ];
+
+      // Abreviaturas de tres letras. Las del JSON del taller se mantienen;
+      // Arg, His, Pro y Tyr se completan con sus abreviaturas estándar.
+      const siglas = {
+        alanina: "Ala",
+        arginina: "Arg",
+        asparagina: "Asn",
+        acido_aspartico: "Asp",
+        cisteina: "Cys",
+        fenilalanina: "Phe",
+        glicina: "Gly",
+        acido_glutamico: "Glu",
+        glutamina: "Gln",
+        histidina: "His",
+        isoleucina: "Ile",
+        leucina: "Leu",
+        lisina: "Lys",
+        metionina: "Met",
+        prolina: "Pro",
+        serina: "Ser",
+        treonina: "Thr",
+        triptofano: "Trp",
+        tirosina: "Tyr",
+        valina: "Val"
+      };
+
       const nombresCategoria = {
         esencial: "Esencial en la dieta humana",
         "no-esencial": "No esencial en la dieta humana",
         "condicionalmente-esencial": "Condicionalmente esencial"
       };
+
       const clasesCategoria = {
         esencial: "essential",
         "no-esencial": "nonessential",
         "condicionalmente-esencial": "conditional"
       };
+
       const menu = document.querySelector("#aminoMenu");
       const detalle = document.querySelector("#detail");
       const busqueda = document.querySelector("#search");
       const filtro = document.querySelector("#categoryFilter");
+
       function renderMenu() {
         const texto = busqueda.value.trim().toLocaleLowerCase("es");
         const categoria = filtro.value;
+
         const visibles = aminoacidos.filter((amino) => {
-          const coincideTexto = amino.nombre.toLocaleLowerCase("es").includes(texto);
-          const coincideCategoria = categoria === "todos" || amino.categoria === categoria;
-          return coincideTexto && coincideCategoria;
+          const coincideNombre = amino.nombre
+            .toLocaleLowerCase("es")
+            .includes(texto);
+          const coincideSigla = (siglas[amino.id] || "")
+            .toLocaleLowerCase("es")
+            .includes(texto);
+          const coincideCategoria =
+            categoria === "todos" || amino.categoria === categoria;
+
+          return (
+            (coincideNombre || coincideSigla) && coincideCategoria
+          );
         });
+
         menu.replaceChildren();
+
         if (visibles.length === 0) {
           const mensaje = document.createElement("p");
           mensaje.className = "empty";
-          mensaje.textContent = "No hay aminoácidos que coincidan con la búsqueda.";
+          mensaje.textContent =
+            "No hay aminoácidos que coincidan con la búsqueda.";
           menu.appendChild(mensaje);
           return;
         }
+
         visibles.forEach((amino) => {
           const boton = document.createElement("button");
           boton.type = "button";
           boton.className = "amino-option";
           boton.dataset.id = amino.id;
           boton.dataset.category = amino.categoria;
-          boton.textContent = amino.nombre;
+          boton.textContent = `${siglas[amino.id] || "—"} · ${amino.nombre}`;
           boton.setAttribute("aria-pressed", "false");
           boton.addEventListener("click", () => mostrarDetalle(amino));
           menu.appendChild(boton);
         });
+
         const seleccionado = menu.querySelector(".amino-option");
+
         if (seleccionado) {
-          const amino = aminoacidos.find((item) => item.id === seleccionado.dataset.id);
+          const amino = aminoacidos.find(
+            (item) => item.id === seleccionado.dataset.id
+          );
           mostrarDetalle(amino);
         }
       }
+
       function crearTarjeta(titulo, contenido, claseExtra = "") {
         const section = document.createElement("section");
         section.className = `info-card ${claseExtra}`.trim();
+
         const heading = document.createElement("h3");
         heading.textContent = titulo;
+
         const paragraph = document.createElement("p");
         paragraph.textContent = contenido;
+
         section.append(heading, paragraph);
         return section;
       }
+
       function mostrarDetalle(amino) {
         if (!amino) return;
+
         detalle.replaceChildren();
+
         const encabezado = document.createElement("div");
         encabezado.className = "detail-header";
+
         const titulo = document.createElement("h2");
-        titulo.textContent = amino.nombre;
+        titulo.textContent = `${amino.nombre} (${siglas[amino.id] || "—"})`;
+
         const categoria = document.createElement("span");
         categoria.className = `category-badge ${clasesCategoria[amino.categoria]}`;
         categoria.textContent = nombresCategoria[amino.categoria];
+
         encabezado.append(titulo, categoria);
+
         const marco = document.createElement("div");
         marco.className = "structure-frame";
+
         const imagen = document.createElement("img");
         imagen.src = amino.imagen;
         imagen.alt = `Estructura química de ${amino.nombre}`;
+
         imagen.onerror = () => {
           marco.replaceChildren();
           const error = document.createElement("p");
@@ -624,30 +839,50 @@
           error.textContent = `No se encontró la imagen "${amino.imagen}". Comprueba que el archivo exista y que el nombre coincida.`;
           marco.appendChild(error);
         };
+
         marco.appendChild(imagen);
+
         const grid = document.createElement("div");
         grid.className = "info-grid";
         grid.append(
-          crearTarjeta("Función nutricional y metabólica", amino.funcion),
-          crearTarjeta("Relación con Agronomía y Recursos Naturales", amino.agronomia),
-          crearTarjeta("Alimentos que lo contienen", amino.alimentos, "food-card")
+          crearTarjeta(
+            "Función nutricional y metabólica",
+            amino.funcion
+          ),
+          crearTarjeta(
+            "Relación con Agronomía y Recursos Naturales",
+            amino.agronomia
+          ),
+          crearTarjeta(
+            "Alimentos que lo contienen",
+            amino.alimentos,
+            "food-card"
+          )
         );
+
         const nota = document.createElement("div");
         nota.className = "note";
+
         if (amino.categoria === "condicionalmente-esencial") {
-          nota.textContent = "La categoría «condicionalmente esencial» se refiere a la nutrición humana y depende de la etapa de vida, el estado fisiológico y la capacidad de síntesis del organismo.";
+          nota.textContent =
+            "La categoría «condicionalmente esencial» se refiere a la nutrición humana y depende de la etapa de vida, el estado fisiológico y la capacidad de síntesis del organismo.";
         } else if (amino.id === "prolina") {
-          nota.textContent = "En esta página, la prolina se clasifica como no esencial en la dieta humana porque el organismo puede sintetizarla. Algunas fuentes la consideran condicionalmente esencial en contextos fisiológicos particulares.";
+          nota.textContent =
+            "En esta página, la prolina se clasifica como no esencial en la dieta humana porque el organismo puede sintetizarla. Algunas fuentes la consideran condicionalmente esencial en contextos fisiológicos particulares.";
         } else {
-          nota.textContent = "La clasificación nutricional mostrada se refiere a las necesidades humanas. No describe si una planta puede sintetizar el aminoácido ni implica que aplicarlo directamente al cultivo produzca un efecto agronómico.";
+          nota.textContent =
+            "La clasificación nutricional mostrada se refiere a las necesidades humanas. No describe si una planta puede sintetizar el aminoácido ni implica que aplicarlo directamente al cultivo produzca un efecto agronómico.";
         }
+
         detalle.append(encabezado, marco, grid, nota);
+
         document.querySelectorAll(".amino-option").forEach((boton) => {
           const activo = boton.dataset.id === amino.id;
           boton.classList.toggle("active", activo);
           boton.setAttribute("aria-pressed", String(activo));
         });
       }
+
       busqueda.addEventListener("input", renderMenu);
       filtro.addEventListener("change", renderMenu);
       renderMenu();
